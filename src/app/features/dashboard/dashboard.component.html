@@ -1,0 +1,59 @@
+<div class="dashboard-wrapper" [class.sidenav-collapsed]="isSidebarCollapsed">
+
+  <!-- Image Slider -->
+  <div id="farmerCarousel" class="carousel slide slider" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div
+        *ngFor="let image of sliderImages; let i = index"
+        class="carousel-item"
+        [class.active]="i === 0"
+        style="position: relative;"
+      >
+        <!-- Logo on top-left -->
+        <img
+          src="assets/agrisetuLogo.png"
+          alt="Logo"
+          style="position: absolute; top: 10px; left: 10px; width: 60px; height: auto; z-index: 10;"
+        />
+
+        <!-- Main carousel image -->
+        <img [src]="image" class="d-block w-100" alt="Farm Image" />
+      </div>
+    </div>
+
+    <!-- Carousel Controls -->
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#farmerCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#farmerCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- Crops Section -->
+  <section class="crops-section mt-4">
+    <div class="category-section">
+      <h4 class="category-title">
+        <span class="category-badge">{{ 'YOUR_CROPS' | translate}}</span>
+      </h4>
+
+      <div class="crop-grid">
+        <div class="crop-card" *ngFor="let crop of selectedCropsToShow">
+          <img [src]="crop.image" [alt]="crop.name" />
+          <p>{{ 'CROPS.' + crop.name | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

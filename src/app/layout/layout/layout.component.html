@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="d-flex">
+  <app-sidebar [isSidebarOpen]="isSidebarOpen" (toggleSidebarEvent)="toggleSidebar()">
+  </app-sidebar>
+
+  <div class="flex-grow-1 p-3 content-area" [ngStyle]="{
+       'margin-left.px': isSidebarOpen && isDesktopView ? 220 : (isDesktopView ? 60 : 0)
+     }" style="transition: margin-left 0.3s ease;">
+    <router-outlet></router-outlet>
+  </div>
+</div>

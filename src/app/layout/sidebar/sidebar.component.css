@@ -1,0 +1,56 @@
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
+  overflow-x: hidden;
+  background-color: #f8f9fa;
+}
+.sidebar.closed {
+  width: 60px;
+}
+
+.list-group-item {
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #2e7d32; /* soft green */
+  color: white;
+  border-radius: 10px;
+}
+
+
+.floating-submenu {
+  position: fixed;
+  top: 60px;
+  left: 60px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  z-index: 1050;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  width: 180px;
+  transition: all 0.3s ease-in-out;
+}
+
+.floating-submenu .list-group-item {
+  padding: 10px 16px;
+  border: none;
+  font-size: 15px;
+  color: #333;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+.floating-submenu .list-group-item:hover {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}

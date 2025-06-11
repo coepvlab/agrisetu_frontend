@@ -1,0 +1,161 @@
+<div class="container my-5">
+  <form #cropForm="ngForm">
+    <h4 class="text-center text-success mb-4 category-badge">{{ 'CROP_DETAILS.TITLE' | translate }}</h4>
+
+    <div class="row g-4">
+      <!-- Crop Name -->
+      <!-- Crop Name (Required) -->
+      <div class="col-md-6">
+        <label for="cropName" class="form-label fw-bold">
+          {{ 'CROP_DETAILS.CROP_NAME' | translate }} <span class="text-danger">*</span>
+        </label>
+        <input type="text" id="cropName" class="form-control" name="cropName" [(ngModel)]="crop.cropName"
+          #cropNameRef="ngModel" required />
+        <div *ngIf="cropNameRef.invalid && cropNameRef.touched" class="text-danger small mt-1">
+          {{ 'CROP_DETAILS.CROP_NAME_REQUIRED' | translate }}
+        </div>
+      </div>
+
+      <!-- Date of Sowing (Required) -->
+      <div class="col-md-6">
+        <label for="sowingDate" class="form-label fw-bold">
+          {{ 'CROP_DETAILS.SOWING_DATE' | translate }} <span class="text-danger">*</span>
+        </label>
+        <input type="date" id="sowingDate" class="form-control" name="sowingDate" [(ngModel)]="crop.sowingDate"
+          #sowingDateRef="ngModel" required />
+        <div *ngIf="sowingDateRef.invalid && sowingDateRef.touched" class="text-danger small mt-1">
+          {{ 'CROP_DETAILS.SOWING_DATE_REQUIRED' | translate }}
+        </div>
+      </div>
+
+      <!-- Weed Name -->
+      <div class="col-md-6">
+        <label for="weedName" class="form-label fw-bold">{{ 'CROP_DETAILS.WEED_NAME' | translate }}</label>
+        <input type="text" id="weedName" class="form-control" name="weedName" [(ngModel)]="crop.weedName" />
+      </div>
+
+      <!-- Current Disease -->
+      <div class="col-md-6">
+        <label for="disease" class="form-label fw-bold">{{ 'CROP_DETAILS.DISEASE' | translate }}</label>
+        <input type="text" id="disease" class="form-control" name="disease" [(ngModel)]="crop.disease" />
+      </div>
+
+      <!-- Pesticides Name + Date -->
+      <div class="col-md-3">
+        <label for="pesticides" class="form-label fw-bold">{{ 'CROP_DETAILS.PESTICIDES' | translate }}</label>
+        <input type="text" id="pesticides" class="form-control" name="pesticides" [(ngModel)]="crop.pesticides" />
+      </div>
+      <div class="col-md-3">
+        <label for="pesticideDate" class="form-label fw-bold">{{ 'CROP_DETAILS.DATE' | translate }}</label>
+        <input type="date" id="pesticideDate" class="form-control" name="pesticideDate"
+          [(ngModel)]="crop.pesticideDate" />
+      </div>
+
+      <!-- Fertilizers Name + Date -->
+      <div class="col-md-3">
+        <label for="fertilizers" class="form-label fw-bold">{{ 'CROP_DETAILS.FERTILIZERS' | translate }}</label>
+        <input type="text" id="fertilizers" class="form-control" name="fertilizers" [(ngModel)]="crop.fertilizers" />
+      </div>
+      <div class="col-md-3">
+        <label for="fertilizerDate" class="form-label fw-bold">{{ 'CROP_DETAILS.DATE' | translate }}</label>
+        <input type="date" id="fertilizerDate" class="form-control" name="fertilizerDate"
+          [(ngModel)]="crop.fertilizerDate" />
+      </div>
+
+      <!-- Weed Removal -->
+      <div class="col-md-6">
+        <label for="weedRemoval" class="form-label fw-bold">{{ 'CROP_DETAILS.WEED_REMOVAL' | translate }}</label>
+        <input type="text" id="weedRemoval" class="form-control" name="weedRemoval" [(ngModel)]="crop.weedRemoval" />
+      </div>
+
+      <!-- Weedicides -->
+      <div class="col-md-6">
+        <label for="weedicideName" class="form-label fw-bold">{{ 'CROP_DETAILS.WEEDICIDE_NAME' | translate }}</label>
+        <input type="text" id="weedicideName" class="form-control" name="weedicideName"
+          [(ngModel)]="crop.weedicideName" />
+      </div>
+
+      <!-- Other Info -->
+      <!-- <div class="col-12">
+        <label for="otherInfo" class="form-label fw-bold">{{ 'CROP_DETAILS.OTHER_INFO' | translate }}</label>
+        <textarea id="otherInfo" rows="3" class="form-control" name="otherInfo" [(ngModel)]="crop.otherInfo"></textarea>
+      </div> -->
+
+      <!-- Photo Upload Buttons -->
+      <div class="col-12">
+        <label class="form-label fw-bold">{{ 'CROP_DETAILS.TAKE_CROP_PHOTO' | translate }}</label>
+
+        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
+          <button type="button" class="btn btn-outline-success w-100" (click)="triggerCamera()">
+            <i class="bi bi-camera"></i> {{ 'CROP_DETAILS.TAKE_CROP_PHOTO' | translate }}
+          </button>
+          <button type="button" class="btn btn-outline-primary w-100" (click)="triggerUpload()">
+            <i class="bi bi-upload"></i> {{ 'CROP_DETAILS.UPLOAD_PHOTO' | translate }}
+          </button>
+        </div>
+
+        <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileChange($event, true)"
+          hidden />
+        <input #uploadInput type="file" accept="image/*" (change)="onFileChange($event, false)" hidden />
+
+        <!-- Preview with Overlays -->
+        <div class="photo-preview row g-3">
+          <div *ngFor="let photo of cropImages; let i = index" class="col-md-4">
+            <div class="photo-box border rounded p-2 position-relative">
+              <button class="btn-close position-absolute top-0 end-0 m-1" (click)="removePhoto(i)"></button>
+              <img [src]="photo.preview" class="img-fluid rounded" alt="Photo" />
+              <small class="d-block text-muted text-center mt-1">
+                📍{{ photo.latitude }}, {{ photo.longitude }}<br>
+                🕒 {{ photo.timestamp }}<br>
+                🏠 {{ photo.address }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <div class="col-12">
+        <label class="form-label fw-bold">{{ 'CROP_DETAILS.TAKE_WEED_PHOTO' | translate }}</label>
+
+        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
+          <button type="button" class="btn btn-outline-success w-100" (click)="triggerCamera()">
+            <i class="bi bi-camera"></i> {{ 'CROP_DETAILS.TAKE_WEED_PHOTO' | translate }}
+          </button>
+          <button type="button" class="btn btn-outline-primary w-100" (click)="triggerUpload()">
+            <i class="bi bi-upload"></i> {{ 'CROP_DETAILS.UPLOAD_PHOTO' | translate }}
+          </button>
+        </div>
+
+        <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileChange($event, true)"
+          hidden />
+        <input #uploadInput type="file" accept="image/*" (change)="onFileChange($event, false)" hidden />
+
+        <!-- Preview with Overlays -->
+        <div class="photo-preview row g-3">
+          <div *ngFor="let photo of cropImages; let i = index" class="col-md-4">
+            <div class="photo-box border rounded p-2 position-relative">
+              <button class="btn-close position-absolute top-0 end-0 m-1" (click)="removePhoto(i)"></button>
+              <img [src]="photo.preview" class="img-fluid rounded" alt="Photo" />
+              <small class="d-block text-muted text-center mt-1">
+                📍{{ photo.latitude }}, {{ photo.longitude }}<br>
+                🕒 {{ photo.timestamp }}<br>
+                🏠 {{ photo.address }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Hidden canvas -->
+      <canvas #canvas width="800" height="600" hidden></canvas>
+
+
+      <!-- Submit Button -->
+      <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-lg btn-success px-5">
+          <i class="bi bi-save"></i> {{ 'CROP_DETAILS.SAVE' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

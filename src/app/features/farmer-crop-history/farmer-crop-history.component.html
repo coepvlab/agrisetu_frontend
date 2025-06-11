@@ -1,0 +1,44 @@
+ <section class="crops-section mt-4">
+    <div class="category-section">
+      <h4 class="category-title">
+        <span class="category-badge">{{ 'YOUR_CROPS' | translate}}</span>
+      </h4>
+
+      <div class="crop-grid">
+        <div class="crop-card" *ngFor="let crop of selectedCropsToShow" (click)="selectCrop(crop)">
+  <img [src]="crop.image" [alt]="crop.name" />
+  <p>{{ 'CROPS.' + crop.name | translate }}</p>
+</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="crop-history-section mt-4" *ngIf="selectedCrop">
+  <div class="history-container">
+    <div class="crop-image-box">
+      <img [src]="selectedCrop.image" [alt]="selectedCrop.name" />
+      <p class="crop-name">{{ 'CROPS.' + selectedCrop.name | translate }}</p>
+    </div>
+
+    <div class="history-details">
+      <h4 class="history-title">{{ 'CROP_HISTORY' | translate }}</h4>
+      <div class="history-item">
+        <strong>{{ 'PLANTING_DATE' | translate }}:</strong>
+        <span>{{ selectedCrop.plantingDate }}</span>
+      </div>
+      <div class="history-item">
+        <strong>{{ 'PESTICIDES_USED' | translate }}:</strong>
+        <ul><li *ngFor="let item of selectedCrop.pesticides">{{ item }}</li></ul>
+      </div>
+      <div class="history-item">
+        <strong>{{ 'DISEASES_OBSERVED' | translate }}:</strong>
+        <ul><li *ngFor="let disease of selectedCrop.diseases">{{ disease }}</li></ul>
+      </div>
+      <div class="history-item">
+        <strong>{{ 'LAST_UPDATED' | translate }}:</strong>
+        <span>{{ selectedCrop.lastUpdated }}</span>
+      </div>
+    </div>
+  </div>
+</section>

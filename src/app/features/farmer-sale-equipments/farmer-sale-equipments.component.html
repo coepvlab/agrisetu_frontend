@@ -1,0 +1,61 @@
+<div class="container mt-4">
+  <h3 class="mb-3">Your Equipments</h3>
+  <div class="row">
+    <div *ngFor="let eq of equipments" class="col-md-4">
+      <div class="card mb-4 shadow text-center">
+        <div class="card-body">
+          <img [src]="eq.image" class="equipment-icon mb-3" alt="{{ eq.name }}">
+          <h5 class="card-title">{{ eq.name }}</h5>
+          <p class="card-text">Category: {{ eq.category }}</p>
+          <button class="btn" style="background-color:#f36f21 ;" (click)="openRentForm(eq)">Make Available for Selling</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal / Popup -->
+<div *ngIf="selectedEquipment" class="modal-backdrop">
+  <div class="modal-box card shadow">
+    <div class="text-center mb-3">
+      <img [src]="selectedEquipment.image" class="equipment-icon mb-2" alt="{{ selectedEquipment.name }}">
+      <h4 class="fw-bold">{{ selectedEquipment.name }}</h4>
+      <p class="text-muted">Category: {{ selectedEquipment.category }}</p>
+    </div>
+
+    <form (ngSubmit)="submitRentForm()" #rentForm="ngForm">
+      <div class="mb-3">
+        <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="rentDetails.contact"
+          name="contact"
+          required
+          placeholder="Enter your contact number"
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Selling Price (in ₹) <span class="text-danger">*</span></label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="rentDetails.price"
+          name="price"
+          required
+          placeholder="e.g., 500"
+        >
+      </div>
+
+    
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -1,0 +1,117 @@
+<div class="sidebar bg-light border-end" [class.closed]="!isSidebarOpen">
+  <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+    <strong class="text-success" *ngIf="isSidebarOpen">
+      <img src="assets/agrisetu.png" alt="Logo" height="40" class="me-2" /> Agriसेतु
+    </strong>
+    <button class="btn btn-sm btn-outline-secondary" (click)="toggleSidebar()">☰</button>
+  </div>
+
+  <ul class="list-group list-group-flush">
+
+    <!-- Dashboard -->
+    <a *ngIf="role=='2'" (click)="gotoDashboard()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-house-fill me-2 text-primary"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.DASHBOARD' | translate }}</span>
+    </a>
+
+    <!-- Add Crops -->
+    <a *ngIf="role=='2'" (click)="gotoVegetables()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-journal-plus me-2 text-success"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.ADD_CROPS' | translate }}</span>
+    </a>
+
+    <!-- Crop Details -->
+    <a *ngIf="role=='2'" (click)="gotoCropDetails()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-file-earmark-bar-graph me-2 text-warning"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.CROP_DETAILS' | translate }}</span>
+    </a>
+
+    <!-- Equipments (Expandable) -->
+    <a *ngIf="role=='2'" (click)="onEquipmentsClick()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-tools me-2 text-danger"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.EQUIPMENTS' | translate }}</span>
+      <i class="bi bi-caret-down ms-auto text-secondary" *ngIf="isSidebarOpen"></i>
+    </a>
+
+    <!-- Equipments Submenu -->
+    <div *ngIf="isEquipmentsOpen && isSidebarOpen" class="list-group ms-4">
+
+      <a (click)="gotoAddEquipment()" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-plus-circle-fill me-2 text-success"></i>
+        <span>{{ 'SIDEBAR.ADD_EQUIPMENTS' | translate }}</span>
+      </a>
+
+      <a (click)="gotoRentEquipment()" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-truck-front-fill me-2 text-info"></i>
+        <span>{{ 'SIDEBAR.RENT' | translate }}</span>
+      </a>
+
+      <a (click)="gotoHireEquipment()" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-person-badge-fill me-2 text-primary"></i>
+        <span>{{ 'SIDEBAR.HIRE' | translate }}</span>
+      </a>
+
+      <a (click)="gotoSaleEquipment()" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-cart-check-fill me-2 text-warning"></i>
+        <span>{{ 'SIDEBAR.SALE' | translate }}</span>
+      </a>
+
+      <a (click)="gotoBuyEquipment()" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-currency-rupee me-2 text-success"></i>
+        <span>{{ 'SIDEBAR.BUY' | translate }}</span>
+      </a>
+    </div>
+
+    <!-- Floating Equipment Submenu (mobile only) -->
+    <div class="floating-submenu" *ngIf="showFloatingEquipmentsMenu && !isSidebarOpen">
+      <a class="list-group-item d-flex align-items-center" (click)="gotoAddEquipment()">
+        <i class="bi bi-plus-circle me-2 text-primary"></i> Add Equipments
+      </a>
+      <a class="list-group-item d-flex align-items-center" (click)="gotoRentEquipment()">
+        <i class="bi bi-truck me-2 text-warning"></i> Rent
+      </a>
+      <a class="list-group-item d-flex align-items-center" (click)="gotoHireEquipment()">
+        <i class="bi bi-person-workspace me-2 text-info"></i> Hire
+      </a>
+      <a class="list-group-item d-flex align-items-center" (click)="gotoSaleEquipment()">
+        <i class="bi bi-cart me-2 text-success"></i> Sale
+      </a>
+      <a class="list-group-item d-flex align-items-center" (click)="gotoBuyEquipment()">
+        <i class="bi bi-currency-dollar me-2 text-danger"></i> Buy
+      </a>
+    </div>
+
+
+
+    <!-- Water Insights -->
+    <a *ngIf="role=='2'" (click)="gotoWater()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-droplet-half me-2 text-primary"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.WATER_INSIGHTS' | translate }}</span>
+    </a>
+
+
+    <a *ngIf="role=='2'" (click)="gotoCropHistory()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.CROP_HISTORY' | translate }}</span>
+    </a>
+
+
+    <!-- Contact -->
+    <a *ngIf="role=='2'" (click)="gotoExpertAdvice()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-telephone-fill me-2 text-danger"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.CONTACT' | translate }}</span>
+    </a>
+
+    <!-- About -->
+    <a  routerLink="/about" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-info-circle-fill me-2 text-secondary"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.ABOUT' | translate }}</span>
+    </a>
+
+    <!-- Logout -->
+    <a  (click)="goToLogin()" class="list-group-item list-group-item-action d-flex align-items-center">
+      <i class="bi bi-box-arrow-right me-2 text-dark"></i>
+      <span *ngIf="isSidebarOpen">{{ 'SIDEBAR.LOGOUT' | translate }}</span>
+    </a>
+  </ul>
+</div>

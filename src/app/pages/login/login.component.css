@@ -1,0 +1,156 @@
+.login-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.left-side {
+  flex: 1;
+  background: #f1f9f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.left-side img {
+  max-width: 100%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.right-side {
+  flex: 1;
+  background: linear-gradient(to right, #a6d5a7, #57ca5e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 2rem;
+}
+
+.login-box {
+  background: white;
+  color: #333;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+.login-box h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: #2e7d32;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2e7d32;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #1b5e20;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #2e7d32;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ✅ Responsive tweaks for tablets and below */
+@media (max-width: 991px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-side, .right-side {
+    flex: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .left-side {
+    padding: 1rem;
+  }
+
+  .right-side {
+    padding: 1rem;
+  }
+
+  .login-box {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .form-group input {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  button {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* ✅ Optional: Further optimization for very small screens (like < 400px width) */
+@media (max-width: 400px) {
+  .login-box h2 {
+    font-size: 1.2rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .signup-link {
+    font-size: 0.8rem;
+  }
+}

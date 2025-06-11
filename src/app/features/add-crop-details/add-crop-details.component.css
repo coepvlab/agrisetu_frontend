@@ -1,0 +1,64 @@
+/* Responsive form labels and buttons */
+@media (max-width: 768px) {
+  .form-label {
+    font-size: 14px;
+  }
+  .btn {
+    width: 100%;
+  }
+}
+
+.category-badge {
+  display: inline-block;
+  background-color: #e6f4ea;
+  color: #2d572c;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid #c2dec8;
+}
+/* Prevent scroll from image previews */
+.photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Adjust photo box size and prevent overflow */
+.photo-box {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Style close button for images */
+.photo-box button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(255, 0, 0, 0.7);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Make image responsive */
+.photo-box img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+
+/* Optional: make the whole container responsive without scroll */
+.container {
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}

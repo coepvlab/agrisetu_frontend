@@ -1,0 +1,28 @@
+<div class="login-container">
+  <div class="left-side">
+    <img src="assets/agrisetuLogo.png" alt="AgriSetu Logo" />
+  </div>
+  <div class="right-side">
+    <div class="login-box">
+      <h2>Login to Agriसेतु</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Mobile no / मोबाईल नंबर</label>
+          <input id="username" type="text" placeholder="Enter mobile no" formControlName="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password / पासवर्ड</label>
+          <input id="password" type="password" placeholder="Enter your password" formControlName="password" />
+        </div>
+
+        <button type="submit">Login</button>
+
+        <p (click)="goToRegister()" class="signup-link">
+          Don't have an account? Sign up अजून खाते नाही? नोंदणी करा.
+        </p>
+      </form>
+
+    </div>
+  </div>
+</div>

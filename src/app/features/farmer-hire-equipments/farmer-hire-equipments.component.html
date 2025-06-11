@@ -1,0 +1,85 @@
+<div class="container mt-4">
+<div class="container mt-5">
+  <h2 class="mb-4 text-center fw-bold text-success">{{ 'EQUIPMENTS.TITLE' | translate }}</h2>
+
+  <div class="row g-4">
+    <div *ngFor="let eq of availableEquipments" class="col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100 border-0">
+        <img [src]="eq.image" class="card-img-top p-3 rounded-4" alt="{{ eq.name }}" style="height: 200px; object-fit: contain; background-color: #f8f9fa;">
+
+        <div class="card-body">
+          <h5 class="card-title text-primary fw-bold">{{ eq.name }}</h5>
+          <span class="badge bg-info mb-2">{{ eq.category }}</span>
+
+          <ul class="list-group list-group-flush text-start mb-3">
+            <li class="list-group-item"><strong>Rent:</strong> ₹{{ eq.price }} <span class="text-muted">/ {{ eq.durationType }}</span></li>
+            <li class="list-group-item"><strong>Owner:</strong> {{ eq.owner }}</li>
+            <li class="list-group-item"><strong>Contact:</strong> {{ eq.contact }}</li>
+          </ul>
+
+          <div class="d-grid">
+            <button class="btn btn-outline-success fw-semibold" (click)="openHireForm(eq)">
+              <i class="bi bi-handbag me-2"></i>Hire This Equipment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div *ngIf="selectedForHire" class="modal-backdrop">
+  <div class="modal-box card shadow">
+    <div class="text-center mb-3">
+      <img [src]="selectedForHire.image" class="equipment-icon mb-2" alt="{{ selectedForHire.name }}">
+      <h4 class="fw-bold">{{ selectedForHire.name }}</h4>
+      <p class="text-muted">Rent: ₹{{ selectedForHire.price }} / {{ selectedForHire.durationType }}</p>
+    </div>
+
+    <form (ngSubmit)="submitHireForm()" #hireForm="ngForm">
+      <div class="mb-3">
+        <label class="form-label">Your Name <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="hireDetails.name"
+          name="name"
+          required
+          placeholder="Enter your full name"
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Your Contact <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="hireDetails.contact"
+          name="contact"
+          required
+          placeholder="Enter your phone number"
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Required Duration <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="hireDetails.duration"
+          name="duration"
+          required
+          placeholder="e.g., 3 days"
+        >
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="cancelHire()">Cancel</button>
+        <button type="submit" class="btn btn-success">Request Hire</button>
+      </div>
+    </form>
+  </div>
+</div>
+

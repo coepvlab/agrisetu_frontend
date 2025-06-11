@@ -1,0 +1,40 @@
+<!-- Selected Crops Sticky Header -->
+<p class="page-heading-icon category-badge">
+  <i class="bi bi-seedling me-2 text-success "></i> {{ 'SIDEBAR.ADD_EQUIPMENTS' | translate }}
+</p>
+
+<div class="sticky-header" *ngIf="selectedEquipments.length > 0">
+  <div class="selected-crops-wrapper">
+    <div class="selected-crop-card" *ngFor="let equipment of selectedEquipments">
+      <img [src]="equipment.image" alt="{{ equipment.name }}" />
+      <span>{{ equipment.name }}</span>
+      <button (click)="removeCrop(equipment)">×</button>
+    </div>
+  </div>
+
+  <!-- Sticky Buttons Below Selected Crops -->
+  <div class="action-buttons">
+    <button class="btn skip" (click)="continueWithoutAdding()">Continue Without Adding Crops</button>
+    <button class="btn save" (click)="saveAndNext()">Save & Next</button>
+  </div>
+</div>
+
+<!-- Crop Categories List -->
+<div class="category-section" *ngFor="let category of getCategories()">
+  <h4 class="category-title text-center">
+    <span class="category-badge">{{ 'EQUIPMENTS.' +category | translate }}</span>
+  </h4>
+
+  <div class="crop-grid">
+    <div
+      class="crop-card"
+      *ngFor="let crop of getCropsByCategory(category)"
+      (click)="toggleCrop(crop)"
+      [class.selected]="isSelected(crop)"
+    >
+      <img [src]="crop.image" alt="{{ crop.name }}" />
+     <p>{{ 'EQUIPMENTS.' + crop.name | translate }}</p>
+    </div>
+  </div>
+</div>
+

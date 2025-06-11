@@ -1,0 +1,46 @@
+.layout {
+  padding-top: 56px;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: absolute;
+    z-index: 1040;
+  }
+
+  .sidebar.closed {
+    display: none;
+  }
+
+  .content-area {
+    margin-left: 0 !important; /* ok only here */
+    width: 100%;
+  }
+}
+
+
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* Adjust content layout for smaller screens */
+@media (max-width: 998px) { 
+  .sidebar {
+    position: absolute;
+    z-index: 1040;
+  }
+
+  .content-area {
+    margin-left: 40px !important;
+    width: 100%;
+  }
+
+  .sidebar.closed {
+    display: none;
+  }
+}
+

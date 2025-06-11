@@ -1,0 +1,50 @@
+.header-img {
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.card img {
+  height: 140px;
+  object-fit: cover;
+}
+
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .card img {
+    height: 120px;
+  }
+}
+
+
+.blinking-dot {
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+  display: inline-block;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
