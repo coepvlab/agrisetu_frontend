@@ -1,0 +1,21 @@
+<div class="market-container">
+  <h2 class="section-title text-success text-center mb-4">
+    {{ 'MARKET_PRICES.TITLE' | translate }}
+  </h2>
+
+  <div class="row g-3">
+    <div
+      class="col-6 col-sm-4 col-md-3 col-lg-2"
+      *ngFor="let crop of crops"
+    >
+      <div class="crop-card">
+        <img [src]="crop.image" [alt]="crop.name" class="crop-image" />
+        <p class="crop-name">{{ 'CROPS.' + crop.name | translate }}</p>
+        <p class="crop-price">
+          ₹ {{ getPrice(crop.name) }} /
+          {{ getUnitKey(crop.category) | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
