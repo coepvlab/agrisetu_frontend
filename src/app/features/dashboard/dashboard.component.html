@@ -49,7 +49,7 @@
 
       <div class="crop-grid">
         <div class="crop-card" *ngFor="let crop of selectedCropsToShow">
-          <img [src]="crop.image" [alt]="crop.name" />
+          <img [src]="crop.image" [alt]="crop.name" (click)="redirectToAddCrops(crop.name)" />
           <p>{{ 'CROPS.' + crop.name | translate }}</p>
         </div>
       </div>

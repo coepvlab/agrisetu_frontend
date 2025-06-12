@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { FarmerService } from '../../core/services/farmer.service';
 
 @Component({
   selector: 'app-add-crop-details',
@@ -13,16 +16,22 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './add-crop-details.component.css'
 })
 export class AddCropDetailsComponent {
+name: string = '';
+username = localStorage.getItem('username') || '';
+
+constructor(private route: ActivatedRoute, private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
+
+ngOnInit() {
+    this.name = this.route.snapshot.paramMap.get('name') || '';
+    this.crop.cropName = this.name;
+  }
+
  // Crop model with name, date, pesticides, fertilizers, etc.
   crop = {
-    cropType: '',
-    area: '',
-    production: '',
     pesticides: '',
     pesticideDate: '',
     fertilizers: '',
     fertilizerDate: '',
-    otherInfo:'',
     weedicideName:'',
     weedRemoval:'',
     disease:'',
@@ -59,7 +68,7 @@ export class AddCropDetailsComponent {
 
   triggerUpload() {
     this.uploadInput.nativeElement.click();
-  }
+  } 
 
   async onFileChange(event: any, fromCamera: boolean) {
     const files = event.target.files;
@@ -159,6 +168,40 @@ export class AddCropDetailsComponent {
 
   removePhoto(index: number) {
     this.cropImages.splice(index, 1);
+  }
+
+  sendDataToServer(){
+    this.farmerService.CallAPIToSendData(this.crop, this.username).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.error('Error fetching crops:', err);
+      }
+    });
+  }
+
+
+   selectedFile!: File;
+
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
+}
+  uploadImage(){
+    const formData = new FormData();
+    formData.append("image", this.selectedFile);
+    this.farmerService.uploadImageToServer(formData, this.username).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.error('Error fetching crops:', err);
+      }
+    });
+    
   }
 }
 

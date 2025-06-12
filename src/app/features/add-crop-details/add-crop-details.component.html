@@ -9,8 +9,8 @@
         <label for="cropName" class="form-label fw-bold">
           {{ 'CROP_DETAILS.CROP_NAME' | translate }} <span class="text-danger">*</span>
         </label>
-        <input type="text" id="cropName" class="form-control" name="cropName" [(ngModel)]="crop.cropName"
-          #cropNameRef="ngModel" required />
+        <input type="text" id="cropName" class="form-control"  name="cropName" [(ngModel)]="crop.cropName"
+          #cropNameRef="ngModel" required disabled/>
         <div *ngIf="cropNameRef.invalid && cropNameRef.touched" class="text-danger small mt-1">
           {{ 'CROP_DETAILS.CROP_NAME_REQUIRED' | translate }}
         </div>
@@ -114,6 +114,11 @@
         </div>
       </div>
 
+      <div class="col-12">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <button (click)="uploadImage()">Upload</button>
+
+      </div>
 
        <div class="col-12">
         <label class="form-label fw-bold">{{ 'CROP_DETAILS.TAKE_WEED_PHOTO' | translate }}</label>
@@ -152,7 +157,7 @@
 
       <!-- Submit Button -->
       <div class="col-12 text-center mt-4">
-        <button type="submit" class="btn btn-lg btn-success px-5">
+        <button type="submit" class="btn btn-lg btn-success px-5" (click)="sendDataToServer()">
           <i class="bi bi-save"></i> {{ 'CROP_DETAILS.SAVE' | translate }}
         </button>
       </div>

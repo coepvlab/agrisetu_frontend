@@ -23,7 +23,7 @@ const routes: Routes = [
     component: VegetablesComponent
   },
   {
-    path: 'add-crops-details',
+    path: 'add-crops-details/:name',
     component: AddCropDetailsComponent
   },
   {

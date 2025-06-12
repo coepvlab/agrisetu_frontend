@@ -165,5 +165,9 @@ filterSelectedCrops(): void {
   );
 }
 
+redirectToAddCrops(name:any){
+  this.router.navigate(['/features/add-crops-details', name])
+}
+
 
 }

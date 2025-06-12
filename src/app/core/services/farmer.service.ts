@@ -29,6 +29,16 @@ export class FarmerService {
     );
   }
   
+  CallAPIToSendData(crops: any, username:string): Observable<any> {
+    const url = `${environment.apiUrl}/farmer/add-crop-details?username=${username}`;
+    return this.http.post(url, crops);
+  }
+
+  uploadImageToServer(formData: any, username:string): Observable<any> {
+    const url = `${environment.apiUrl}/farmer/upload/image?username=${username}`;
+    return this.http.post(url, formData);
+  }
+
   testIntegration(): Observable<any> {
     return this.http.get<any>(
       `${this.testUrl}`
