@@ -7,7 +7,7 @@ export const environment={
   // authUrl:'http://localhost:8080/virtualmathlab',
   // fileurl:'http://localhost:8080/QueFiles/',
  
-   apiUrl: 'http://192.168.0.108:8080/agrisetu',
-   authUrl:'http://192.168.0.108:8080/auth',
+   apiUrl: 'http://192.168.0.109:8080/agrisetu',
+   authUrl:'http://192.168.0.109:8080/auth',
 //    fileurl:'http://192.168.1.87:8080/virtualmathlab/QueFiles/',
 };

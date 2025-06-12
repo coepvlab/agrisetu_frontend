@@ -1,0 +1,62 @@
+.market-container {
+  padding: 20px;
+  margin: auto;
+  max-width: 1200px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.crop-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 14px;
+  transition: transform 0.2s;
+  height: 100%;
+}
+
+.crop-card:hover {
+  transform: translateY(-4px);
+}
+
+.crop-image {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* On large screens, reduce image height to prevent cut-off */
+@media (min-width: 992px) {
+  .crop-image {
+    max-height: 85px;
+  }
+}
+
+/* On mobile view: use contain and slightly smaller size */
+@media (max-width: 576px) {
+  .crop-image {
+    max-height: 70px;
+    object-fit: contain;
+    padding: 6px;
+    background-color: #f9f9f9;
+  }
+}
+
+
+.crop-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin-top: 8px;
+}
+
+.crop-price {
+  font-size: 14px;
+  color: #28a745;
+}

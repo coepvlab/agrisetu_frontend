@@ -110,6 +110,11 @@ gotoBuyEquipment() {
   this.router.navigate(['/features/farmer-crop-history']);  // Replace with your actual route path
 }
 
+gotoMarketPrice(){
+   this.showFloatingEquipmentsMenu = false; // Close any open floating menus
+  this.router.navigate(['/features/farmer-market-price']);  // Replace with your actual route path
+}
+
 
   showFloatingEquipmentsMenu = false;
 

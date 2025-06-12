@@ -160,6 +160,10 @@ export class AddCropDetailsComponent {
   removePhoto(index: number) {
     this.cropImages.splice(index, 1);
   }
+
+  submitCropDetails(){
+    console.log(this.crop);
+  }
 }
 
 

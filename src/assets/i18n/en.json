@@ -135,5 +135,13 @@
         "DATE": "Date",
         "CROP_NAME_REQUIRED": "Crop name is required.",
         "SOWING_DATE_REQUIRED": "Sowing date is required."
+    },
+    "MARKET_PRICES": {
+        "TITLE": "Today's Market Prices"
+    },
+    "UNITS": {
+        "KG": "kg",
+        "QUINTAL": "quintal",
+        "UNIT": "unit"
     }
 }

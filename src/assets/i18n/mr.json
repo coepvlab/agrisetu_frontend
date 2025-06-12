@@ -135,5 +135,13 @@
         "DATE": "दिनांक",
         "CROP_NAME_REQUIRED": "पिकाचे नाव आवश्यक आहे.",
         "SOWING_DATE_REQUIRED": "पेरणीची तारीख आवश्यक आहे."
+    },
+    "MARKET_PRICES": {
+        "TITLE": "आजचे बाजारभाव"
+    },
+    "UNITS": {
+        "KG": "किलो",
+        "QUINTAL": "क्विंटल",
+        "UNIT": "युनिट"
     }
 }
