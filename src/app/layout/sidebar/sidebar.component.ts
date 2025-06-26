@@ -128,4 +128,10 @@ onEquipmentsClick() {
   }
 }
 
+
+gotoAdminFarmerHistory(){
+  this.showFloatingEquipmentsMenu = false; // Close any open floating menus
+  this.router.navigate(['/features/farmer-history']);  // Replace with your actual route path
+}
+
 }

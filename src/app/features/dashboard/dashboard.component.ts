@@ -29,56 +29,6 @@ export class DashboardComponent {
     { name: 'Corn', image: 'assets/maize.jpg' }
   ];
 
-
-  // crops = [
-  //   { name: 'Tomato', category: 'Vegetables', image: 'assets/tomato.jpg' },
-  //   { name: 'Potato', category: 'Vegetables', image: 'assets/potato.jpg' },
-  //   { name: 'Onion', category: 'Vegetables', image: 'assets/onion.jpg' },
-  //   { name: 'Brinjal', category: 'Vegetables', image: 'assets/brinjal.jpg' },
-  //   { name: 'Cabbage', category: 'Vegetables', image: 'assets/cabbage.jpg' },
-  //   { name: 'Cauliflower', category: 'Vegetables', image: 'assets/cauliflower.jpg' },
-  //   { name: 'Capsicum', category: 'Vegetables', image: 'assets/capsicum.jpg' },
-  //   { name: 'Green Pea', category: 'Vegetables', image: 'assets/green_pea.jpg' },
-  //   { name: 'Okra', category: 'Vegetables', image: 'assets/okra.jpg' },
-
-  //   { name: 'Wheat', category: 'Grains', image: 'assets/wheat.jpg' },
-  //   { name: 'Rice', category: 'Grains', image: 'assets/paddy.jpg' },
-  //   { name: 'Bajra', category: 'Grains', image: 'assets/bajra.jpg' },
-  //   { name: 'Jowar', category: 'Grains', image: 'assets/jowar.jpg' },
-  //   { name: 'Maize', category: 'Grains', image: 'assets/maize.jpg' },
-
-
-  //   { name: 'Moong', category: 'Pulses', image: 'assets/moong.jpg' },
-  //   { name: 'Chana', category: 'Pulses', image: 'assets/chana.jpg' },
-  //   { name: 'Black Gram', category: 'Pulses', image: 'assets/udid.jpg' },
-  //   { name: 'Pigeon Pea', category: 'Pulses', image: 'assets/PigeonPea.jpg' },
-
-
-  //   { name: 'Banana', category: 'Fruits', image: 'assets/banana.jpg' },
-  //   { name: 'Mango', category: 'Fruits', image: 'assets/mango.jpg' },
-  //   { name: 'Sapota', category: 'Fruits', image: 'assets/sapota.jpg' },
-  //   { name: 'Orange', category: 'Fruits', image: 'assets/orange.jpg' },
-  //   { name: 'Papaya', category: 'Fruits', image: 'assets/papaya.jpg' },
-  //   { name: 'Grapes', category: 'Fruits', image: 'assets/grapes.jpg' },
-  //   { name: 'Guava', category: 'Fruits', image: 'assets/guava.jpg' },
-  //   { name: 'Pomegranate', category: 'Fruits', image: 'assets/pomegranate.jpg' },
-  //   { name: 'Watermelon', category: 'Fruits', image: 'assets/watermelon.jpg' },
-  //   { name: 'Strawberry', category: 'Fruits', image: 'assets/strawberry.jpg' },
-
-
-  //   { name: 'Cotton', category: 'Others', image: 'assets/cotton.jpg' },
-  //   { name: 'Sugarcane', category: 'Others', image: 'assets/sugarcane.jpg' },
-  //   { name: 'Cucumber', category: 'Others', image: 'assets/cucumber.jpg' },
-  //   { name: 'Garlic', category: 'Others', image: 'assets/garlic.jpg' },
-  //   { name: 'Green Chilli', category: 'Others', image: 'assets/green_chilli.jpg' },
-  //   // { name: 'Dry Chilli', category: 'Others', image: 'assets/dry_chilli.jpg' },
-  //   { name: 'Groundnut', category: 'Others', image: 'assets/groundnut.jpg' },
-  //   { name: 'Dragon Fruit', category: 'Others', image: 'assets/dragon_fruit.jpg' },
-
-
-  // ];
-
-
   crops = [
   { name: 'TOMATO', category: 'Vegetables', image: 'assets/tomato.jpg' },
   { name: 'POTATO', category: 'Vegetables', image: 'assets/potato.jpg' },
@@ -89,6 +39,18 @@ export class DashboardComponent {
   { name: 'CAPSICUM', category: 'Vegetables', image: 'assets/capsicum.jpg' },
   { name: 'GREEN_PEA', category: 'Vegetables', image: 'assets/green_pea.jpg' },
   { name: 'OKRA', category: 'Vegetables', image: 'assets/okra.jpg' },
+  { name: 'RED_BEAT', category: 'Vegetables', image: 'assets/red_beat.jpg' },
+  { name: 'MULA', category: 'Vegetables', image: 'assets/mula.jpeg' },
+  { name: 'DUDHI_BHOPLA', category: 'Vegetables', image: 'assets/dudhi_bhopla.webp' },
+  { name: 'SHEVGA', category: 'Vegetables', image: 'assets/shevga.webp' },
+  { name: 'GHEVDA', category: 'Vegetables', image: 'assets/ghevda.webp' },
+  { name: 'KOTHIMBIR', category: 'Vegetables', image: 'assets/kothimbir.jpg' },
+  { name: 'GAJAR', category: 'Vegetables', image: 'assets/gajar.jpg' },
+  { name: 'SHEPU', category: 'Vegetables', image: 'assets/shepu.jpg' },
+  { name: 'METHI', category: 'Vegetables', image: 'assets/methi.jpeg' },
+  { name: 'KARLE', category: 'Vegetables', image: 'assets/karle.jpg' },
+  { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
+  { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
   { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
   { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
   { name: 'BAJRA', category: 'Grains', image: 'assets/bajra.jpg' },

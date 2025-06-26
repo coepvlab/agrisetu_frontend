@@ -2,77 +2,108 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FarmerService } from '../../core/services/farmer.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-crop-details',
   standalone: true,
-  imports: [TranslateModule,CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [TranslateModule, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-crop-details.component.html',
   styleUrl: './add-crop-details.component.css'
 })
 export class AddCropDetailsComponent {
-name: string = '';
-username = localStorage.getItem('username') || '';
 
-constructor(private route: ActivatedRoute, private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
+  name: string = '';
+  username = localStorage.getItem('username') || '';
 
-ngOnInit() {
+  constructor(private route: ActivatedRoute, private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
+
+  ngOnInit() {
     this.name = this.route.snapshot.paramMap.get('name') || '';
     this.crop.cropName = this.name;
   }
 
- // Crop model with name, date, pesticides, fertilizers, etc.
+  // Crop model with name, date, pesticides, fertilizers, etc.
   crop = {
     pesticides: '',
     pesticideDate: '',
     fertilizers: '',
     fertilizerDate: '',
-    weedicideName:'',
-    weedRemoval:'',
-    disease:'',
-    weedName:'',
-    sowingDate:'',
-    cropName:''
+    weedicideName: '',
+    weedRemoval: '',
+    disease: '',
+    weedName: '',
+    sowingDate: '',
+    cropName: '',
+    latitude: 0,
+    longitude: 0,
+    timestamp: '',
+    address: ''
   };
 
-   @ViewChild('cameraInput') cameraInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('uploadInput') uploadInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   cropImages: any[] = [];
+  weedImages: any[] = [];
 
-  // triggerCamera() {
-   
-  // }
+  @ViewChild('canvasRef', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  triggerCamera() {
-     this.cameraInput.nativeElement.click();
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      alert(`Latitude: ${pos.coords.latitude}\nLongitude: ${pos.coords.longitude}`);
-    },
-    (err) => {
-      alert('Error: ' + err.message);
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000
-    }
-  );
+  @ViewChild('cropCameraInput') cropCameraInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('cropUploadInput') cropUploadInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('weedCameraInput') weedCameraInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('weedUploadInput') weedUploadInput!: ElementRef<HTMLInputElement>;
+
+// 🚀 Reusable method to set location before file input
+private async setCropLocationDetails() {
+  const { latitude, longitude, address } = await this.getLocationAndAddress();
+  const timestamp = new Date().toLocaleString();
+
+  this.crop.latitude = latitude;
+  this.crop.longitude = longitude;
+  this.crop.address = address;
+  this.crop.timestamp = timestamp;
 }
 
-  triggerUpload() {
-    this.uploadInput.nativeElement.click();
-  } 
+// 🌾 Crop Camera Button Click
+async triggerCropCamera() {
+  await this.setCropLocationDetails();
+  this.cropCameraInput.nativeElement.click();
+}
 
-  async onFileChange(event: any, fromCamera: boolean) {
+// 🌾 Crop Upload (from gallery)
+async triggerCropUpload() {
+  await this.setCropLocationDetails();
+  this.cropUploadInput.nativeElement.click();
+}
+
+// 🌿 Weed Camera Button Click
+async triggerWeedCamera() {
+  await this.setCropLocationDetails();
+  this.weedCameraInput.nativeElement.click();
+}
+
+// 🌿 Weed Upload
+async triggerWeedUpload() {
+  await this.setCropLocationDetails();
+  this.weedUploadInput.nativeElement.click();
+}
+
+  async onCropFileChange(event: any) {
     const files = event.target.files;
     if (files && files.length > 0) {
+      const { latitude, longitude, address } = await this.getLocationAndAddress();
+      const timestamp = new Date().toLocaleString();
+
+      // Save to crop object
+      this.crop.latitude = latitude;
+      this.crop.longitude = longitude;
+      this.crop.timestamp = timestamp;
+      this.crop.address = address;
+
       for (let file of files) {
         const preview = await this.overlayImageWithGeo(file);
         this.cropImages.push(preview);
@@ -80,50 +111,35 @@ ngOnInit() {
     }
   }
 
+
+
+  async onWeedFileChange(event: any) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      for (let file of files) {
+        const preview = await this.overlayImageWithGeo(file);
+        this.weedImages.push(preview);
+      }
+    }
+  }
+
+
   async overlayImageWithGeo(file: File): Promise<any> {
-  const reader = new FileReader();
-  const image = new Image();
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
 
-  return new Promise<any>((resolve) => {
-    reader.onload = async () => {
-      image.src = reader.result as string;
-
-      image.onload = async () => {
-        const canvas = this.canvasRef.nativeElement;
-        const ctx = canvas.getContext('2d')!;
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-        const { latitude, longitude, address } = await this.getLocationAndAddress();
-        const timestamp = new Date().toLocaleString();
-
-        // Overlay background
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        ctx.fillRect(0, canvas.height - 110, canvas.width, 110);
-
-        // Overlay text
-        ctx.fillStyle = 'white';
-        ctx.font = '24px sans-serif';
-        ctx.fillText(`Lat: ${latitude.toFixed(6)} | Lon: ${longitude.toFixed(6)}`, 20, canvas.height - 80);
-        ctx.fillText(`Time: ${timestamp}`, 20, canvas.height - 50);
-        ctx.fillText(`Addr: ${address.substring(0, 80)}...`, 20, canvas.height - 20);
-
-        const preview = canvas.toDataURL('image/jpeg');
-
+      reader.onload = () => {
+        // Use reader.result directly as preview
         resolve({
-          preview,
-          latitude,
-          longitude,
-          timestamp,
-          address
+          preview: reader.result
         });
       };
-    };
-    reader.readAsDataURL(file);
-  });
-}
+
+      reader.onerror = (error) => reject(error);
+
+      reader.readAsDataURL(file); // Important!
+    });
+  }
 
 
   async getLocationAndAddress(): Promise<any> {
@@ -133,6 +149,7 @@ ngOnInit() {
       return;
     }
 
+    // Force fresh location using maximumAge = 0
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const latitude = pos.coords.latitude;
@@ -159,51 +176,149 @@ ngOnInit() {
       },
       {
         enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
+        timeout: 15000,
+        maximumAge: 0 // Force fresh location
       }
     );
   });
 }
 
-  removePhoto(index: number) {
-    this.cropImages.splice(index, 1);
-  }
 
-  sendDataToServer(){
-    this.farmerService.CallAPIToSendData(this.crop, this.username).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.error('Error fetching crops:', err);
-      }
-    });
-  }
-
-
-   selectedFile!: File;
-
-onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-  if (file) {
-    this.selectedFile = file;
-  }
-}
-  uploadImage(){
+  onSubmit() {
     const formData = new FormData();
-    formData.append("image", this.selectedFile);
-    this.farmerService.uploadImageToServer(formData, this.username).subscribe({
+
+    // Add crop object with location info
+    formData.append('cropData', JSON.stringify(this.crop));
+
+    // Attach images
+    this.cropImages.forEach((img, index) => {
+      const blob = this.dataURLtoBlob(img.preview);
+      formData.append('cropImages', blob, `crop_${index}.jpg`);
+    });
+
+    this.weedImages.forEach((img, index) => {
+      const blob = this.dataURLtoBlob(img.preview);
+      formData.append('weedImages', blob, `weed_${index}.jpg`);
+    });
+
+    this.loader.start(); // Start loader
+
+    this.farmerService.uploadCropData(formData, this.username).subscribe({
       next: (res) => {
-        console.log(res);
+        this.loader.stop(); // Stop loader
+
+        if (res.status === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully submitted',
+            text: res.message,
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            this.resetCropForm(); // Reset form and image previews
+             this.router.navigate(['/features/dashboard']);
+          });
+
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Unexpected Response',
+            text: res.message || 'Unexpected status code.',
+          });
+        }
       },
       error: (err) => {
-        console.error('Error fetching crops:', err);
+        this.loader.stop(); // Stop loader
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Upload Failed',
+          text: err.error?.message || 'Something went wrong',
+        });
       }
     });
-    
+
+  }
+
+
+  dataURLtoBlob(dataURL: string): Blob {
+    const parts = dataURL.split(';base64,');
+    const mime = parts[0].split(':')[1];
+    const byteString = atob(parts[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mime });
+  }
+
+
+  resetCropForm() {
+    this.crop = {
+      pesticides: '',
+      pesticideDate: '',
+      fertilizers: '',
+      fertilizerDate: '',
+      weedicideName: '',
+      weedRemoval: '',
+      disease: '',
+      weedName: '',
+      sowingDate: '',
+      cropName: '',
+      latitude: 0,
+      longitude: 0,
+      timestamp: '',
+      address: ''
+    };
+
+    this.cropImages = [];
+    this.weedImages = [];
+
+    // Optionally reset input fields if needed
+    if (this.cropCameraInput) this.cropCameraInput.nativeElement.value = '';
+    if (this.cropUploadInput) this.cropUploadInput.nativeElement.value = '';
+    if (this.weedCameraInput) this.weedCameraInput.nativeElement.value = '';
+    if (this.weedUploadInput) this.weedUploadInput.nativeElement.value = '';
+  }
+
+
+
+  testMethod() {
+    this.farmerService.testUpload(this.username).subscribe({
+      next: (res) => {
+        console.log('Upload successful', res);
+        // Optionally reset form or show success message
+      },
+      error: (err) => {
+        console.error('Upload failed', err);
+      }
+    });
   }
 }
+
+// selectedFile!: File;
+
+// onFileSelected(event: any) {
+//   const file: File = event.target.files[0];
+//   if (file) {
+//     this.selectedFile = file;
+//   }
+// }
+// uploadImage(){
+//   const formData = new FormData();
+//   formData.append("image", this.selectedFile);
+//   this.farmerService.uploadImageToServer(formData, this.username).subscribe({
+//     next: (res) => {
+//       console.log(res);
+//     },
+//     error: (err) => {
+//       console.error('Error fetching crops:', err);
+//     }
+//   });
+
+// }
+
 
 
 

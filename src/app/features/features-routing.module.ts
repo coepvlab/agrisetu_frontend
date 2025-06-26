@@ -13,6 +13,7 @@ import { FarmerWaterInsightsComponent } from './farmer-water-insights/farmer-wat
 import { FarmerCropHistoryComponent } from './farmer-crop-history/farmer-crop-history.component';
 import { FarmerExpertAdviceComponent } from './farmer-expert-advice/farmer-expert-advice.component';
 import { FarmerMarketPrizesComponent } from './farmer-market-prizes/farmer-market-prizes.component';
+import { AdminFarmerHistoryComponent } from './admin-farmer-history/admin-farmer-history.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'farmer-market-price',
     component: FarmerMarketPrizesComponent
+  },
+  {
+    path:'farmer-history',
+    component:AdminFarmerHistoryComponent
   }
   // Add more child routes if needed
 ];

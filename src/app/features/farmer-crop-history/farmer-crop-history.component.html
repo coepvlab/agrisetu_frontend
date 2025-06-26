@@ -1,44 +1,106 @@
- <section class="crops-section mt-4">
-    <div class="category-section">
-      <h4 class="category-title">
-        <span class="category-badge">{{ 'YOUR_CROPS' | translate}}</span>
-      </h4>
+<section class="crops-section mt-4">
+  <div class="category-section">
+    <h4 class="category-title">
+      <span class="category-badge">{{ 'CROP_HISTORY.YOUR_CROPS' | translate }}</span>
+    </h4>
 
-      <div class="crop-grid">
-        <div class="crop-card" *ngFor="let crop of selectedCropsToShow" (click)="selectCrop(crop)">
-  <img [src]="crop.image" [alt]="crop.name" />
-  <p>{{ 'CROPS.' + crop.name | translate }}</p>
-</div>
-      </div>
-    </div>
-  </section>
-
-
-  <section class="crop-history-section mt-4" *ngIf="selectedCrop">
-  <div class="history-container">
-    <div class="crop-image-box">
-      <img [src]="selectedCrop.image" [alt]="selectedCrop.name" />
-      <p class="crop-name">{{ 'CROPS.' + selectedCrop.name | translate }}</p>
-    </div>
-
-    <div class="history-details">
-      <h4 class="history-title">{{ 'CROP_HISTORY' | translate }}</h4>
-      <div class="history-item">
-        <strong>{{ 'PLANTING_DATE' | translate }}:</strong>
-        <span>{{ selectedCrop.plantingDate }}</span>
-      </div>
-      <div class="history-item">
-        <strong>{{ 'PESTICIDES_USED' | translate }}:</strong>
-        <ul><li *ngFor="let item of selectedCrop.pesticides">{{ item }}</li></ul>
-      </div>
-      <div class="history-item">
-        <strong>{{ 'DISEASES_OBSERVED' | translate }}:</strong>
-        <ul><li *ngFor="let disease of selectedCrop.diseases">{{ disease }}</li></ul>
-      </div>
-      <div class="history-item">
-        <strong>{{ 'LAST_UPDATED' | translate }}:</strong>
-        <span>{{ selectedCrop.lastUpdated }}</span>
+    <div class="crop-grid">
+      <div class="crop-card" *ngFor="let crop of selectedCropsToShow" (click)="selectCrop(crop)">
+        <img [src]="crop.image" [alt]="crop.name" />
+        <p>{{ 'CROPS.' + crop.name | translate }}</p>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Crop History Section -->
+<div *ngIf="selectedCropName && selectedCropDetails.length > 0; else cropHistoryFallback" id="crop-history-section" class="history-section mt-4">
+  <h4 class="text-success text-center mb-4">
+    🌾 {{ 'CROP_HISTORY.CROP_HISTORY_FOR' | translate:{ crop: selectedCropName } }}
+  </h4>
+
+  <div class="row g-4" *ngFor="let crop of selectedCropDetails">
+    <!-- Crop Details -->
+    <div class="col-md-6">
+      <div class="card border-success shadow-sm">
+        <div class="card-header bg-success text-white">
+          <strong>{{ crop.cropName }}</strong>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush small">
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.SOWING_DATE' | translate }}:</strong> {{ crop.sowingDate }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.PESTICIDES' | translate }}:</strong> {{ crop.pesticides }} ({{ crop.pesticideDate }})</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.FERTILIZERS' | translate }}:</strong> {{ crop.fertilizers }} ({{ crop.fertilizerDate }})</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEEDICIDE' | translate }}:</strong> {{ crop.weedicideName }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEED_REMOVAL' | translate }}:</strong> {{ crop.weedRemoval }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.DISEASE' | translate }}:</strong> {{ crop.disease }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEED_NAME' | translate }}:</strong> {{ crop.weedName }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.ADDRESS' | translate }}:</strong> {{ crop.address }}</li>
+            <li class="list-group-item"><strong>{{ 'CROP_HISTORY.TIMESTAMP' | translate }}:</strong> {{ crop.timestamp }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images Section -->
+    <div class="col-md-6">
+      <div class="card border-info shadow-sm">
+        <div class="card-body">
+          <!-- Crop Images -->
+          <h5 class="text-info mb-3">🌱 {{ 'CROP_HISTORY.CROP_IMAGES' | translate }}</h5>
+          <div class="d-flex flex-wrap gap-3">
+            <ng-container *ngIf="crop.validCropImages.length > 0; else noCropImages">
+              <img *ngFor="let img of crop.validCropImages"
+                   [src]="environment.imgUrl + username + '/' + img"
+                   class="img-preview"
+                   (click)="onImageClick(environment.imgUrl + username + '/' + img)" />
+            </ng-container>
+            <ng-template #noCropImages>
+              <p class="text-muted">{{ 'CROP_HISTORY.NO_CROP_IMAGES' | translate }}</p>
+            </ng-template>
+          </div>
+
+          <!-- Weed Images -->
+          <h5 class="text-info mt-4 mb-3">🌿 {{ 'CROP_HISTORY.WEED_IMAGES' | translate }}</h5>
+          <div class="d-flex flex-wrap gap-3">
+            <ng-container *ngIf="crop.validWeedImages.length > 0; else noWeedImages">
+              <img *ngFor="let img of crop.validWeedImages"
+                   [src]="environment.imgUrl + username + '/' + img"
+                   class="img-preview"
+                   (click)="onImageClick(environment.imgUrl + username + '/' + img)" />
+            </ng-container>
+            <ng-template #noWeedImages>
+              <p class="text-muted">{{ 'CROP_HISTORY.NO_WEED_IMAGES' | translate }}</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fallback Messages -->
+<ng-template #cropHistoryFallback>
+  <div class="text-center text-muted mt-4" *ngIf="!selectedCropName">
+    {{ 'CROP_HISTORY.SELECT_CROP_MESSAGE' | translate }}
+  </div>
+  <div class="text-center text-danger mt-4" *ngIf="selectedCropName && selectedCropDetails.length === 0">
+    {{ 'CROP_HISTORY.NO_HISTORY_FOR_CROP' | translate:{ crop: selectedCropName } }}
+  </div>
+</ng-template>
+
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="selectedImageUrl" class="img-fluid rounded shadow" style="max-height: 75vh;" />
+      </div>
+    </div>
+  </div>
+</div>

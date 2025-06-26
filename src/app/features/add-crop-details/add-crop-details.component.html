@@ -9,7 +9,7 @@
         <label for="cropName" class="form-label fw-bold">
           {{ 'CROP_DETAILS.CROP_NAME' | translate }} <span class="text-danger">*</span>
         </label>
-        <input type="text" id="cropName" class="form-control"  name="cropName" [(ngModel)]="crop.cropName"
+        <input type="text" id="cropName" class="form-control"  name="cropName" [value]="'CROPS.' + crop.cropName | translate" [(ngModel)]="crop.cropName"
           #cropNameRef="ngModel" required disabled/>
         <div *ngIf="cropNameRef.invalid && cropNameRef.touched" class="text-danger small mt-1">
           {{ 'CROP_DETAILS.CROP_NAME_REQUIRED' | translate }}
@@ -81,86 +81,77 @@
         <textarea id="otherInfo" rows="3" class="form-control" name="otherInfo" [(ngModel)]="crop.otherInfo"></textarea>
       </div> -->
 
-      <!-- Photo Upload Buttons -->
-      <div class="col-12">
-        <label class="form-label fw-bold">{{ 'CROP_DETAILS.TAKE_CROP_PHOTO' | translate }}</label>
+   <!-- Crop Image Upload Section -->
+<div class="col-12">
+  <label class="form-label fw-bold">Take Crop Photo</label>
+  <div class="d-flex gap-2 flex-column flex-md-row mb-3">
+    <button type="button" class="btn btn-outline-success w-100" (click)="triggerCropCamera()">
+      <i class="bi bi-camera"></i> Camera
+    </button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="triggerCropUpload()">
+      <i class="bi bi-upload"></i> Upload from Gallery
+    </button>
+  </div>
 
-        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
-          <button type="button" class="btn btn-outline-success w-100" (click)="triggerCamera()">
-            <i class="bi bi-camera"></i> {{ 'CROP_DETAILS.TAKE_CROP_PHOTO' | translate }}
-          </button>
-          <button type="button" class="btn btn-outline-primary w-100" (click)="triggerUpload()">
-            <i class="bi bi-upload"></i> {{ 'CROP_DETAILS.UPLOAD_PHOTO' | translate }}
-          </button>
-        </div>
+  <!-- Hidden Inputs for Crop -->
+  <input #cropCameraInput type="file" accept="image/*" capture="environment"
+         (change)="onCropFileChange($event)" hidden multiple />
+  <input #cropUploadInput type="file" accept="image/*"
+         (change)="onCropFileChange($event)" hidden multiple />
 
-        <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileChange($event, true)"
-          hidden />
-        <input #uploadInput type="file" accept="image/*" (change)="onFileChange($event, false)" hidden />
-
-        <!-- Preview with Overlays -->
-        <div class="photo-preview row g-3">
-          <div *ngFor="let photo of cropImages; let i = index" class="col-md-4">
-            <div class="photo-box border rounded p-2 position-relative">
-              <button class="btn-close position-absolute top-0 end-0 m-1" (click)="removePhoto(i)"></button>
-              <img [src]="photo.preview" class="img-fluid rounded" alt="Photo" />
-              <small class="d-block text-muted text-center mt-1">
-                📍{{ photo.latitude }}, {{ photo.longitude }}<br>
-                🕒 {{ photo.timestamp }}<br>
-                🏠 {{ photo.address }}
-              </small>
-            </div>
-          </div>
-        </div>
+  <!-- Crop Image Previews -->
+  <div class="row g-3">
+    <div *ngFor="let photo of cropImages; let i = index" class="col-md-4">
+      <div class="position-relative border p-2 rounded shadow-sm">
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-1"
+                (click)="cropImages.splice(i, 1)"></button>
+        <img [src]="photo.preview" alt="Crop Photo" class="img-fluid rounded mb-2" />
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="col-12">
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-        <button (click)="uploadImage()">Upload</button>
+<!-- Weed Image Upload Section -->
+<div class="col-12 mt-4">
+  <label class="form-label fw-bold">Take Weed Photo</label>
+  <div class="d-flex gap-2 flex-column flex-md-row mb-3">
+    <button type="button" class="btn btn-outline-success w-100" (click)="triggerWeedCamera()">
+      <i class="bi bi-camera"></i> Camera
+    </button>
+    <button type="button" class="btn btn-outline-primary w-100" (click)="triggerWeedUpload()">
+      <i class="bi bi-upload"></i> Upload from Gallery
+    </button>
+  </div>
 
+  <!-- Hidden Inputs for Weed -->
+  <input #weedCameraInput type="file" accept="image/*" capture="environment"
+         (change)="onWeedFileChange($event)" hidden multiple />
+  <input #weedUploadInput type="file" accept="image/*"
+         (change)="onWeedFileChange($event)" hidden multiple />
+
+  <!-- Weed Image Previews -->
+  <div class="row g-3">
+    <div *ngFor="let photo of weedImages; let i = index" class="col-md-4">
+      <div class="position-relative border p-2 rounded shadow-sm">
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-1"
+                (click)="weedImages.splice(i, 1)"></button>
+        <img [src]="photo.preview" alt="Weed Photo" class="img-fluid rounded mb-2" />
       </div>
+    </div>
+  </div>
+</div>
 
-       <div class="col-12">
-        <label class="form-label fw-bold">{{ 'CROP_DETAILS.TAKE_WEED_PHOTO' | translate }}</label>
-
-        <div class="d-flex flex-column flex-md-row gap-3 mb-3">
-          <button type="button" class="btn btn-outline-success w-100" (click)="triggerCamera()">
-            <i class="bi bi-camera"></i> {{ 'CROP_DETAILS.TAKE_WEED_PHOTO' | translate }}
-          </button>
-          <button type="button" class="btn btn-outline-primary w-100" (click)="triggerUpload()">
-            <i class="bi bi-upload"></i> {{ 'CROP_DETAILS.UPLOAD_PHOTO' | translate }}
-          </button>
-        </div>
-
-        <input #cameraInput type="file" accept="image/*" capture="environment" (change)="onFileChange($event, true)"
-          hidden />
-        <input #uploadInput type="file" accept="image/*" (change)="onFileChange($event, false)" hidden />
-
-        <!-- Preview with Overlays -->
-        <div class="photo-preview row g-3">
-          <div *ngFor="let photo of cropImages; let i = index" class="col-md-4">
-            <div class="photo-box border rounded p-2 position-relative">
-              <button class="btn-close position-absolute top-0 end-0 m-1" (click)="removePhoto(i)"></button>
-              <img [src]="photo.preview" class="img-fluid rounded" alt="Photo" />
-              <small class="d-block text-muted text-center mt-1">
-                📍{{ photo.latitude }}, {{ photo.longitude }}<br>
-                🕒 {{ photo.timestamp }}<br>
-                🏠 {{ photo.address }}
-              </small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Hidden canvas -->
-      <canvas #canvas width="800" height="600" hidden></canvas>
-
+<!-- Hidden canvas used for overlay rendering -->
+<!-- <canvas #canvasRef hidden></canvas> -->
 
       <!-- Submit Button -->
       <div class="col-12 text-center mt-4">
-        <button type="submit" class="btn btn-lg btn-success px-5" (click)="sendDataToServer()">
+        <button type="submit" class="btn btn-lg btn-success px-5" (click)="onSubmit()">
           <i class="bi bi-save"></i> {{ 'CROP_DETAILS.SAVE' | translate }}
         </button>
       </div>
+
+
     </div>
   </form>
 </div>

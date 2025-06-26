@@ -1,0 +1,118 @@
+<div class="farmer-history-header d-flex align-items-center mb-4">
+  <!-- Icon -->
+  <i class="bi bi-clock-history text-success me-2" style="font-size: 1.5rem; margin-left: 1rem;"></i>
+  
+  <!-- Heading -->
+  <h3 class="fw-semibold mb-0" style="font-size: 1.5rem;">
+    {{ 'SIDEBAR.FARMER_HISTORY' | translate }}
+  </h3>
+</div>
+
+<!-- Farmer Selection -->
+<section class="farmer-selection mt-4 mb-4 p-3 border rounded shadow-sm">
+    <h4 class="category-title mb-3">{{ 'FARMER_HISTORY.SELECT_FARMER' | translate }}</h4>
+    <select class="form-select" [(ngModel)]="selectedFarmer" (change)="getFarmerHistory(selectedFarmer)">
+        <option *ngFor="let farmer of farmers" [ngValue]="farmer">{{ farmer.firstName }} {{ farmer.lastName }}</option>
+    </select>
+
+</section>
+
+
+<!-- Farmer History -->
+<div>
+    <h5 class="text-center text-success mb-4">
+        📜 {{ 'FARMER_HISTORY.HISTORY_FOR' | translate }} : {{ selectedFarmerName }}
+    </h5>
+
+    <div class="row g-4" *ngFor="let crop of farmerHistory">
+        <!-- Crop Details -->
+        <div class="col-md-6">
+            <div class="card border-success shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <strong>{{ crop.cropName }}</strong>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.SOWING_DATE' | translate }}:</strong> {{
+                            crop.sowingDate }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.PESTICIDES' | translate }}:</strong> {{
+                            crop.pesticides }} ({{ crop.pesticideDate }})</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.FERTILIZERS' | translate }}:</strong> {{
+                            crop.fertilizers }} ({{ crop.fertilizerDate }})</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEEDICIDE' | translate }}:</strong> {{
+                            crop.weedicideName }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEED_REMOVAL' | translate }}:</strong> {{
+                            crop.weedRemoval }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.DISEASE' | translate }}:</strong> {{
+                            crop.disease }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.WEED_NAME' | translate }}:</strong> {{
+                            crop.weedName }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.ADDRESS' | translate }}:</strong> {{
+                            crop.address }}</li>
+                        <li class="list-group-item"><strong>{{ 'CROP_HISTORY.TIMESTAMP' | translate }}:</strong> {{
+                            crop.timestamp }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Images Section -->
+        <div class="col-md-6">
+            <div class="card border-info shadow-sm">
+                <div class="card-body">
+                    <!-- Crop Images -->
+                    <h5 class="text-info mb-3">🌱 {{ 'CROP_HISTORY.CROP_IMAGES' | translate }}</h5>
+                    <div class="d-flex flex-wrap gap-3">
+                        <ng-container *ngIf="crop.validCropImages.length > 0; else noCropImages">
+                            <img *ngFor="let img of crop.validCropImages"
+                                [src]="environment.imgUrl + selectedUsername + '/' + img" class="img-preview"
+                                (click)="onImageClick(environment.imgUrl + selectedUsername + '/' + img)" />
+                        </ng-container>
+                        <ng-template #noCropImages>
+                            <p class="text-muted">{{ 'CROP_HISTORY.NO_CROP_IMAGES' | translate }}</p>
+                        </ng-template>
+                    </div>
+
+                    <!-- Weed Images -->
+                    <h5 class="text-info mt-4 mb-3">🌿 {{ 'CROP_HISTORY.WEED_IMAGES' | translate }}</h5>
+                    <div class="d-flex flex-wrap gap-3">
+                        <ng-container *ngIf="crop.validWeedImages.length > 0; else noWeedImages">
+                            <img *ngFor="let img of crop.validWeedImages"
+                                [src]="environment.imgUrl + selectedUsername + '/' + img" class="img-preview"
+                                (click)="onImageClick(environment.imgUrl + selectedUsername + '/' + img)" />
+                        </ng-container>
+                        <ng-template #noWeedImages>
+                            <p class="text-muted">{{ 'CROP_HISTORY.NO_WEED_IMAGES' | translate }}</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noHistory>
+    <div class="text-center text-muted mt-4">{{ 'FARMER_HISTORY.NO_HISTORY' | translate }}</div>
+</ng-template>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img [src]="selectedImageUrl" class="img-fluid rounded shadow" style="max-height: 75vh;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="noDataMessage"
+    class="alert alert-info d-flex flex-wrap align-items-center justify-content-center mt-3 text-center" role="alert">
+    <i class="bi bi-info-circle-fill me-2 mb-1"></i>
+    <span class="fw-medium">{{ 'FARMER_HISTORY.NO_DATA' | translate }}</span>
+</div>

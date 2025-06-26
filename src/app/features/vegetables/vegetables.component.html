@@ -7,7 +7,7 @@
   <div class="selected-crops-wrapper">
     <div class="selected-crop-card" *ngFor="let crop of selectedCrops">
       <img [src]="crop.image" alt="{{ crop.name }}" />
-      <span>{{ crop.name }}</span>
+      <span>{{ 'CROPS.' + crop.name | translate }}</span>
       <button (click)="removeCrop(crop)">×</button>
     </div>
   </div>

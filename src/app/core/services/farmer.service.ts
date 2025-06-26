@@ -45,5 +45,26 @@ export class FarmerService {
     );
   }
 
+uploadCropData(formData: any, username: string): Observable<any> {
+  const url = `${environment.apiUrl}/farmer1/upload-crop-data?username=${username}`;
+  return this.http.post(url, formData);
+}
+
+
+uploadImages(formData: FormData, username: string): Observable<any> {
+  const url = `${environment.apiUrl}/farmer1/upload-images?username=${username}`;
+  return this.http.post(url, formData);
+}
+
+getCropHistory(username: any, cropName: string): Observable<any> {
+  const url = `${environment.apiUrl}/farmer1/crop-history?username=${username}&cropName=${cropName}`;
+  return this.http.get(url);
+}
+
+
+testUpload(username: string): Observable<any> {
+  const url = `${environment.apiUrl}/farmer1/test-upload?username=${username}`;
+  return this.http.post(url, null); // null body, only query param
+}
 
 }

@@ -22,6 +22,18 @@ export class FarmerMarketPrizesComponent {
   { name: 'CAULIFLOWER', category: 'Vegetables', image: 'assets/cauliflower.jpg' },
   { name: 'CAPSICUM', category: 'Vegetables', image: 'assets/capsicum.jpg' },
   { name: 'GREEN_PEA', category: 'Vegetables', image: 'assets/green_pea.jpg' },
+  { name: 'RED_BEAT', category: 'Vegetables', image: 'assets/red_beat.jpg' },
+  { name: 'MULA', category: 'Vegetables', image: 'assets/mula.jpeg' },
+  { name: 'DUDHI_BHOPLA', category: 'Vegetables', image: 'assets/dudhi_bhopla.webp' },
+  { name: 'SHEVGA', category: 'Vegetables', image: 'assets/shevga.webp' },
+  { name: 'GHEVDA', category: 'Vegetables', image: 'assets/ghevda.webp' },
+  { name: 'KOTHIMBIR', category: 'Vegetable', image: 'assets/kothimbir.jpg' },
+  { name: 'GAJAR', category: 'Vegetables', image: 'assets/gajar.jpg' },
+  { name: 'SHEPU', category: 'Vegetable', image: 'assets/shepu.jpg' },
+  { name: 'METHI', category: 'Vegetable', image: 'assets/methi.jpeg' },
+  { name: 'KARLE', category: 'Vegetables', image: 'assets/karle.jpg' },
+  { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
+  { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
   { name: 'OKRA', category: 'Vegetables', image: 'assets/okra.jpg' },
   { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
   { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
@@ -92,8 +104,23 @@ export class FarmerMarketPrizesComponent {
   GARLIC: 90,
   GREEN_CHILLI: 65,
   GROUNDNUT: 5300,
-  DRAGON_FRUIT: 140
+  DRAGON_FRUIT: 140,
+
+  // Added new vegetable names with placeholder prices
+  RED_BEAT: 28,
+  MULA: 22,
+  DUDHI_BHOPLA: 20,
+  SHEVGA: 35,
+  GHEVDA: 40,
+  KOTHIMBIR: 10,
+  GAJAR: 24,
+  SHEPU: 15,
+  METHI: 18,
+  KARLE: 30,
+  DODKA: 28,
+  GAWAR: 32
 };
+
 
 getUnitKey(category: string): string {
   if (category === 'Fruits' || category === 'Vegetables') return 'UNITS.KG';

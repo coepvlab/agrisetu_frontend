@@ -20,7 +20,8 @@
         "WATER_AVAILABILITY": "Water Availability",
         "DROUGHT_UPDATES": "Drought Updates",
         "RAINFALL_REPORTS": "Rainfall Reports",
-        "CROP_HISTORY": "Crop History"
+        "CROP_HISTORY": "Crop History",
+        "FARMER_HISTORY": "Farmer History"
     },
     "YOUR_CROPS": "My Crops",
     "CATEGORY": {
@@ -65,7 +66,19 @@
         "GARLIC": "Garlic",
         "GREEN_CHILLI": "Green Chilli",
         "GROUNDNUT": "Groundnut",
-        "DRAGON_FRUIT": "Dragon Fruit"
+        "DRAGON_FRUIT": "Dragon Fruit",
+        "RED_BEAT": "Red Beet",
+        "MULA": "Radish",
+        "DUDHI_BHOPLA": "Bottle Gourd",
+        "SHEVGA": "Drumstick",
+        "GHEVDA": "French Beans",
+        "KOTHIMBIR": "Coriander",
+        "GAJAR": "Carrot",
+        "SHEPU": "Dill",
+        "METHI": "Fenugreek",
+        "KARLE": "Bitter Gourd",
+        "DODKA": "Ridge Gourd",
+        "GAWAR": "Cluster Beans"
     },
     "EQUIPMENTS": {
         "TRACTOR": "Tractor",
@@ -131,7 +144,7 @@
         "PHOTOS": "Photos",
         "TAKE_WEED_PHOTO": "Take Crop Photo",
         "TAKE_CROP_PHOTO": "Take Weed Photo",
-        "UPLOAD_PHOTO": "Upload from Laptop",
+        "UPLOAD_PHOTO": "Upload from Device",
         "DATE": "Date",
         "CROP_NAME_REQUIRED": "Crop name is required.",
         "SOWING_DATE_REQUIRED": "Sowing date is required."
@@ -143,5 +156,31 @@
         "KG": "kg",
         "QUINTAL": "quintal",
         "UNIT": "unit"
+    },
+    "CROP_GUIDE_MESSAGE": "👉 Click on a crop icon to fill in the information and get better suggestions!",
+    "CROP_HISTORY": {
+        "YOUR_CROPS": "Your Crops",
+        "SELECT_CROP_MESSAGE": "🌾 Select a crop to view its history",
+        "CROP_HISTORY_FOR": "Crop History - {{ crop }}",
+        "NO_HISTORY_FOR_CROP": "No history available for {{ crop }}.",
+        "SOWING_DATE": "Sowing Date",
+        "PESTICIDES": "Pesticides",
+        "FERTILIZERS": "Fertilizers",
+        "WEEDICIDE": "Weedicide",
+        "WEED_REMOVAL": "Weed Removal",
+        "DISEASE": "Disease",
+        "WEED_NAME": "Weed Name",
+        "ADDRESS": "Address",
+        "TIMESTAMP": "Timestamp",
+        "CROP_IMAGES": "Crop Images",
+        "NO_CROP_IMAGES": "No crop images available.",
+        "WEED_IMAGES": "Weed Images",
+        "NO_WEED_IMAGES": "No weed images available."
+    },
+    "FARMER_HISTORY": {
+        "SELECT_FARMER": "Select Farmer",
+        "HISTORY_FOR": "History for",
+        "NO_DATA": "No available data for this farmer",
+        "ERROR_FETCHING": "Error fetching crop history"
     }
 }

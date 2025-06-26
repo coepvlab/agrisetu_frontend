@@ -194,3 +194,23 @@
   background-color: #e9fbe9;
 }
 
+
+
+.scrolling-banner {
+  /* white-space: nowrap; */
+  overflow: hidden;
+  position: relative;
+  background: #e0f7fa;
+  border: none;
+  font-size: 16px;
+  /* animation: scroll-text 15s linear infinite; */
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

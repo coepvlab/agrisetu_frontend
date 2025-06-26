@@ -4,23 +4,21 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FarmerService } from '../../core/services/farmer.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
+import { Modal } from 'bootstrap';
+
 @Component({
   selector: 'app-farmer-crop-history',
   standalone: true,
-  imports: [TranslateModule, CommonModule],
+  imports: [TranslateModule, CommonModule,],
   templateUrl: './farmer-crop-history.component.html',
   styleUrl: './farmer-crop-history.component.css'
 })
 export class FarmerCropHistoryComponent {
 
-  selectedCrop = {
-    name: 'Wheat',
-    image: 'assets/wheat.jpg',
-    plantingDate: '2024-12-15',
-    pesticides: ['Pesticide A', 'Pesticide B'],
-    diseases: ['Rust', 'Leaf spot'],
-    lastUpdated: '2025-04-01'
-  };
+  public environment = environment;
+
 
   crops = [
     { name: 'TOMATO', category: 'Vegetables', image: 'assets/tomato.jpg' },
@@ -32,6 +30,18 @@ export class FarmerCropHistoryComponent {
     { name: 'CAPSICUM', category: 'Vegetables', image: 'assets/capsicum.jpg' },
     { name: 'GREEN_PEA', category: 'Vegetables', image: 'assets/green_pea.jpg' },
     { name: 'OKRA', category: 'Vegetables', image: 'assets/okra.jpg' },
+    { name: 'RED_BEAT', category: 'Vegetables', image: 'assets/red_beat.jpg' },
+    { name: 'MULA', category: 'Vegetables', image: 'assets/mula.jpeg' },
+    { name: 'DUDHI_BHOPLA', category: 'Vegetables', image: 'assets/dudhi_bhopla.webp' },
+    { name: 'SHEVGA', category: 'Vegetables', image: 'assets/shevga.webp' },
+    { name: 'GHEVDA', category: 'Vegetables', image: 'assets/ghevda.webp' },
+    { name: 'KOTHIMBIR', category: 'Vegetables', image: 'assets/kothimbir.jpg' },
+    { name: 'GAJAR', category: 'Vegetables', image: 'assets/gajar.jpg' },
+    { name: 'SHEPU', category: 'Vegetables', image: 'assets/shepu.jpg' },
+    { name: 'METHI', category: 'Vegetables', image: 'assets/methi.jpeg' },
+    { name: 'KARLE', category: 'Vegetables', image: 'assets/karle.jpg' },
+    { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
+    { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
     { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
     { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
     { name: 'BAJRA', category: 'Grains', image: 'assets/bajra.jpg' },
@@ -66,15 +76,75 @@ export class FarmerCropHistoryComponent {
   isSidebarCollapsed = false;
   selectedCropNames: string = '';
   selectedCropsToShow: any[] = [];
+  selectedCropDetails: any[] = [];
+  selectedCropName = '';
 
 
   ngOnInit(): void {
     this.getSelectedCropsByFarmer();
+
   }
 
   selectCrop(crop: any): void {
-    this.selectedCrop = crop;
+    this.selectedCropName = crop.name; // this is correct
+    this.getCropHistory();
+
+    setTimeout(() => {
+      const section = document.getElementById('crop-history-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
+
+
+  getCropImageByName(cropName: string): string {
+    const crop = this.crops.find(c => c.name.toLowerCase() === cropName.toLowerCase());
+    return crop ? crop.image : 'assets/default-crop.jpg'; // Use a default fallback image if not found
+  }
+
+
+  getCropHistory(): void {
+    this.farmerService.getCropHistory(this.username, this.selectedCropName).subscribe({
+      next: (res) => {
+        this.selectedCropDetails = res.data;
+        if (res.data && res.data.length > 0) {
+          this.selectedCropDetails.forEach((crop: any) => {
+            crop.validWeedImages = crop.weedImageNames?.filter((img: string) => !!img?.trim()) || [];
+            crop.validCropImages = crop.cropImageNames?.filter((img: string) => !!img?.trim()) || [];
+          });
+        } else {
+          this.selectedCropDetails = []; // no data case
+        }
+
+
+      },
+      error: (err) => {
+        console.error('Failed to fetch crop history:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err.error?.message || 'Failed to fetch crop history'
+        });
+      }
+    });
+  }
+
+
+  selectedImageUrl: string = '';
+  bootstrap: any;
+
+  onImageClick(imageUrl: string) {
+    this.selectedImageUrl = imageUrl;
+    const modalElement = document.getElementById('imageModal');
+    if (modalElement) {
+      const modal = new Modal(modalElement); // use imported Modal class
+      modal.show();
+    }
+  }
+
+
+
   getCategories(): string[] {
     return [...new Set(this.crops.map(crop => crop.category))];
   }

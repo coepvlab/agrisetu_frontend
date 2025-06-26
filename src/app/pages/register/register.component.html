@@ -23,24 +23,70 @@
   </div>
 
   <div class="col-md-6">
-    <label for="mobile" class="form-label">मोबाईल नंबर / Mobile No</label>
-    <input type="text" class="form-control" id="mobile" formControlName="mobile">
+  <label for="mobile" class="form-label">मोबाईल नंबर / Mobile No</label>
+  <input type="text" class="form-control" id="mobile" formControlName="mobile">
+  <div *ngIf="registrationForm.get('mobile')?.touched && registrationForm.get('mobile')?.invalid" class="text-danger small">
+    <span *ngIf="registrationForm.get('mobile')?.errors?.['required']">मोबाईल नंबर आवश्यक आहे.</span>
+    <span *ngIf="registrationForm.get('mobile')?.errors?.['pattern']">वैध 10 अंकी मोबाईल नंबर टाका.</span>
   </div>
+</div>
+
 
   <div class="col-md-6">
-    <label for="aadhar" class="form-label">आधार क्रमांक / Aadhar No</label>
-    <input type="text" class="form-control" id="aadhar" formControlName="aadhar">
-  </div>
+  <label for="aadhar" class="form-label">आधार क्रमांक / Aadhar No</label>
+  <input
+    type="text"
+    class="form-control"
+    id="aadhar"
+    formControlName="aadhar"
+    maxlength="12"
+    pattern="[0-9]{12}"
+    (input)="onAadharInput($event)"
+    placeholder="१२ अंकी आधार क्रमांक"
+  >
+</div>
+
 
   <div class="col-md-6">
     <label for="gatNumber" class="form-label">गट क्रमांक / Gat Number</label>
     <input type="text" class="form-control" id="gatNumber" formControlName="gatNumber">
   </div>
 
-  <div class="col-md-4">
-    <label for="password" class="form-label">पासवर्ड / Password</label>
-    <input type="password" class="form-control" id="password" formControlName="password">
+<div class="col-md-4 position-relative">
+  <label for="password" class="form-label">पासवर्ड / Password</label>
+
+  <div class="input-group">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      class="form-control"
+      id="password"
+      formControlName="password"
+      placeholder="पासवर्ड प्रविष्ट करा / Enter password"
+    />
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="togglePasswordVisibility()"
+      tabindex="-1"
+    >
+      <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+    </button>
   </div>
+
+  <div
+    *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.invalid"
+    class="text-danger small mt-1"
+  >
+    <span *ngIf="registrationForm.get('password')?.errors?.['required']">
+      पासवर्ड आवश्यक आहे.
+    </span>
+    <span *ngIf="registrationForm.get('password')?.errors?.['minlength']">
+      किमान 6 अक्षरे लागतील.
+    </span>
+  </div>
+</div>
+
+
 
   <div class="col-md-4">
     <label for="gender" class="form-label">लिंग / Gender</label>
@@ -97,16 +143,12 @@
     <button type="submit" class="btn btn-custom w-100 mt-2">नोंदणी करा / Register</button>
   </div>
 
-  <div class="col-12">
-    <div class="mt-2 text-center">
-      <span>Already registered? Please login. आधीच नोंदणी केली आहे? लॉगिन करा.</span><br>
-      <button class="btn btn-success mt-2" (click)="goToLogin()">Go to Login</button>
-    </div>
-  </div>
+ <div class="col-12 text-center mt-3">
+  <small class="text-muted d-block">आधीच नोंदणी केली आहे?</small>
+  <button class="btn btn-outline-primary btn-sm rounded-circle" (click)="goToLogin()" title="लॉगिन करा">
+    <i class="bi bi-box-arrow-in-right"></i>
+  </button>
+</div>
+
 </form>
-
-
-  <!-- <div class="logo-bottom-right">
-  <img src="assets/agrisetu.png" alt="Logo" />
-</div> -->
 </div>

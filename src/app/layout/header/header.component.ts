@@ -33,4 +33,4 @@ export class HeaderComponent {
   localStorage.setItem('lang', selectedLang);
 }
 
-}
+} 

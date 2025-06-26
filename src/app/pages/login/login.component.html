@@ -6,15 +6,49 @@
     <div class="login-box">
       <h2>Login to Agriसेतु</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="email">Mobile no / मोबाईल नंबर</label>
-          <input id="username" type="text" placeholder="Enter mobile no" formControlName="username" />
+        <!-- Mobile Number Field -->
+        <div class="form-group mb-3">
+          <label for="username">Mobile no / मोबाईल नंबर</label>
+          <input id="username" type="text" maxlength="10" class="form-control" placeholder="Enter mobile no"
+            formControlName="username" />
+          <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+            class="text-danger small">
+            <span *ngIf="loginForm.get('username')?.errors?.['required']">मोबाईल नंबर आवश्यक आहे.</span>
+            <span *ngIf="loginForm.get('username')?.errors?.['pattern']">10 अंकी वैध मोबाईल नंबर टाका.</span>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="password">Password / पासवर्ड</label>
-          <input id="password" type="password" placeholder="Enter your password" formControlName="password" />
-        </div>
+      <div class="form-group mb-3 position-relative">
+  <label for="password">Password / पासवर्ड</label>
+
+  <!-- Wrapper to hold input and icon -->
+  <div class="position-relative">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      id="password"
+      class="form-control pe-5" 
+      placeholder="Enter your password"
+      formControlName="password"
+    />
+
+    <!-- Eye icon inside the input field box -->
+    <i
+      class="bi position-absolute top-50 translate-middle-y text-muted"
+      [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+      style="right: 12px; pointer-events: auto; cursor: pointer;"
+      (click)="togglePasswordVisibility()"
+    ></i>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger small mt-1">
+    <span *ngIf="loginForm.get('password')?.errors?.['required']">पासवर्ड आवश्यक आहे.</span>
+  </div>
+</div>
+
+
+
+
 
         <button type="submit">Login</button>
 
