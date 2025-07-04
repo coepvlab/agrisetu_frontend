@@ -8,7 +8,7 @@
     <div class="selected-crop-card" *ngFor="let equipment of selectedEquipments">
       <img [src]="equipment.image" alt="{{ equipment.name }}" />
       <span>{{ equipment.name }}</span>
-      <button (click)="removeCrop(equipment)">×</button>
+      <button (click)="removeEquipment(equipment)">×</button>
     </div>
   </div>
 
@@ -28,12 +28,12 @@
   <div class="crop-grid">
     <div
       class="crop-card"
-      *ngFor="let crop of getCropsByCategory(category)"
-      (click)="toggleCrop(crop)"
-      [class.selected]="isSelected(crop)"
+      *ngFor="let equipment of getEquipmentsByCategory(category)"
+      (click)="toggleEquipment(equipment)"
+      [class.selected]="isSelected(equipment)"
     >
-      <img [src]="crop.image" alt="{{ crop.name }}" />
-     <p>{{ 'EQUIPMENTS.' + crop.name | translate }}</p>
+      <img [src]="equipment.image" alt="{{ equipment.name }}" />
+     <p>{{ 'EQUIPMENTS.' + equipment.name | translate }}</p>
     </div>
   </div>
 </div>

@@ -121,7 +121,7 @@ saveAndNext(): void {
     return;
   }
 
-  const username = localStorage.getItem('username');
+  const username = sessionStorage.getItem('username');
   if (!username) {
     Swal.fire({
       icon: 'error',

@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 export class AddCropDetailsComponent {
 
   name: string = '';
-  username = localStorage.getItem('username') || '';
+  username = sessionStorage.getItem('username') || '';
 
   constructor(private route: ActivatedRoute, private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
 

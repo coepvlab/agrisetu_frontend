@@ -42,6 +42,9 @@ export class FarmerCropHistoryComponent {
     { name: 'KARLE', category: 'Vegetables', image: 'assets/karle.jpg' },
     { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
     { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
+    { name: 'ADARAK', category: 'Vegetables', image: 'assets/adarak.webp' },
+    { name: 'HALAD', category: 'Vegetables', image: 'assets/halad.webp' },
+
     { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
     { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
     { name: 'BAJRA', category: 'Grains', image: 'assets/bajra.jpg' },
@@ -72,7 +75,7 @@ export class FarmerCropHistoryComponent {
 
   constructor(private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
 
-  username = localStorage.getItem('username');
+  username = sessionStorage.getItem('username');
   isSidebarCollapsed = false;
   selectedCropNames: string = '';
   selectedCropsToShow: any[] = [];
@@ -151,9 +154,9 @@ export class FarmerCropHistoryComponent {
 
 
   getSelectedCropsByFarmer(): void {
-    const username = localStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
     if (!username) {
-      console.error('Username not found in localStorage');
+      console.error('Username not found in sessionStorage');
       return;
     }
     this.farmerService.getSelectedCropsByFarmer(username).subscribe({

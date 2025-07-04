@@ -15,7 +15,7 @@ import { FarmerService } from '../../core/services/farmer.service';
 export class SidebarComponent {
  
    constructor(private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
-    role=localStorage.getItem('role');
+  role=sessionStorage.getItem('role');
   @Input() isSidebarOpen: boolean = true;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   isWaterMenuOpen = false; // Controls Water Insights submenu

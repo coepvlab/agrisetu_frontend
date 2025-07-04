@@ -17,7 +17,7 @@ export class HeaderComponent {
     translate.addLangs(['en', 'mr']);
     translate.setDefaultLang('en');
 
-    const savedLang = localStorage.getItem('lang');
+    const savedLang = sessionStorage.getItem('lang');
     const browserLang = translate.getBrowserLang() ?? 'en'; // fallback to 'en' if undefined
 
     const langToUse = savedLang ?? (['en', 'mr'].includes(browserLang) ? browserLang : 'en');
@@ -30,7 +30,7 @@ export class HeaderComponent {
   const target = event.target as HTMLSelectElement;
   const selectedLang = target.value;
   this.translate.use(selectedLang);
-  localStorage.setItem('lang', selectedLang);
+  sessionStorage.setItem('lang', selectedLang);
 }
 
 } 

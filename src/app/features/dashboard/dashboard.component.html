@@ -62,4 +62,21 @@
     </div>
   </section>
 
+
+   <!-- Crops Section -->
+  <section class="crops-section mt-4">
+    <div class="category-section">
+      <h4 class="category-title">
+        <span class="category-badge">{{ 'MY_EQUIPMENTS' | translate}}</span>
+      </h4>
+
+      <div class="crop-grid">
+        <div class="crop-card" *ngFor="let equipment of equipmentsToShow">
+          <img [src]="equipment.image" [alt]="equipment.name" />
+          <p>{{ 'EQUIPMENTS.' + equipment.name | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>

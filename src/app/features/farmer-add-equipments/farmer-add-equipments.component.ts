@@ -49,11 +49,11 @@ export class FarmerAddEquipmentsComponent {
 
 
   getCategories(): string[] {
-    return [...new Set(this.equipments.map(crop => crop.category))];
+    return [...new Set(this.equipments.map(equipment => equipment.category))];
   }
 
-  getCropsByCategory(category: string) {
-    return this.equipments.filter(crop => crop.category === category);
+  getEquipmentsByCategory(category: string) {
+    return this.equipments.filter(equipment => equipment.category === category);
   }
 
   selectCrop(crop: any) {
@@ -63,21 +63,21 @@ export class FarmerAddEquipmentsComponent {
 
   selectedEquipments: any[] = [];
 
-toggleCrop(crop: any) {
-  const index = this.selectedEquipments.findIndex(c => c.name === crop.name);
+toggleEquipment(equipment: any) {
+  const index = this.selectedEquipments.findIndex(e => e.name === equipment.name);
   if (index > -1) {
     this.selectedEquipments.splice(index, 1);
   } else {
-    this.selectedEquipments.push(crop);
+    this.selectedEquipments.push(equipment);
   }
 }
 
-isSelected(crop: any): boolean {
-  return this.selectedEquipments.some(c => c.name === crop.name);
+isSelected(equipment: any): boolean {
+  return this.selectedEquipments.some(e => e.name === equipment.name);
 }
 
-removeCrop(crop: any) {
-  this.selectedEquipments = this.selectedEquipments.filter(c => c.name !== crop.name);
+removeEquipment(equipment: any) {
+  this.selectedEquipments = this.selectedEquipments.filter(e => e.name !== equipment.name);
 }
 
 continueWithoutAdding() {
@@ -86,20 +86,20 @@ continueWithoutAdding() {
 
 
 saveAndNext(): void {
-  console.log('Final Selected Crops:', this.selectedEquipments);
+  console.log('Final Selected Equipments:', this.selectedEquipments);
 
   if (!this.selectedEquipments || this.selectedEquipments.length === 0) {
     Swal.fire({
       icon: 'warning',
-      title: 'No Crops Selected',
-      text: 'Please select at least one crop before submitting.',
+      title: 'No Equipment Selected',
+      text: 'Please select at least one equipment before submitting.',
       confirmButtonText: 'OK',
       width: '350px',
     });
     return;
   }
 
-  const username = localStorage.getItem('username');
+  const username = sessionStorage.getItem('username');
   if (!username) {
     Swal.fire({
       icon: 'error',
@@ -113,15 +113,15 @@ saveAndNext(): void {
 
   this.loader.start(); // Start loader
 
-  this.farmerService.updateSelectedCrops(this.selectedEquipments, username).subscribe({
+  this.farmerService.addFarmerEquipments(this.selectedEquipments, username).subscribe({
     next: (response: any) => {
       this.loader.stop();
-      console.log('Selected crops submitted successfully', response);
+      console.log('Selected equipments submitted successfully', response);
 
       Swal.fire({
         icon: 'success',
         title: 'Saved Successfully',
-        text: 'Your crop selection has been saved!',
+        text: 'Your equipment selection has been saved!',
         width: '350px',
         padding: '1.5em',
         backdrop: true,
@@ -134,12 +134,12 @@ saveAndNext(): void {
     },
     error: (error: { error: { message: any; }; }) => {
       this.loader.stop();
-      console.error('Error submitting crops:', error);
+      console.error('Error submitting equipments:', error);
 
       Swal.fire({
         icon: 'error',
         title: 'Submission Failed',
-        text: error?.error?.message || 'Failed to save selected crops. Please try again.',
+        text: error?.error?.message || 'Failed to save selected equipments. Please try again.',
         confirmButtonText: 'OK',
         width: '90%',
       });

@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }  // HttpClient injection here
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('user');
+    return !!sessionStorage.getItem('user');
   }
 
   login(data: { username: string; password: string }): Observable<any> {
@@ -23,23 +23,23 @@ export class AuthService {
 
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!sessionStorage.getItem('token');
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   // login(username: string, password: string): boolean {
   //   if (username === 'Nayan' && password === '123') {
-  //     localStorage.setItem('user', JSON.stringify({ username }));
+  //     sessionStorage.setItem('user', JSON.stringify({ username }));
   //     return true;
   //   }
   //   return false;
   // }
 
   logout(): void {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
   }
 
   register(data: any): Observable<any> {

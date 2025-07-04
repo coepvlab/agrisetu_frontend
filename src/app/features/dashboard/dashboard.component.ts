@@ -51,6 +51,9 @@ export class DashboardComponent {
   { name: 'KARLE', category: 'Vegetables', image: 'assets/karle.jpg' },
   { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
   { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
+   { name: 'ADARAK', category: 'Vegetables', image: 'assets/adarak.webp' },
+  { name: 'HALAD', category: 'Vegetables', image: 'assets/halad.webp' },
+
   { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
   { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
   { name: 'BAJRA', category: 'Grains', image: 'assets/bajra.jpg' },
@@ -79,9 +82,45 @@ export class DashboardComponent {
   { name: 'DRAGON_FRUIT',category: 'Others', image: 'assets/groundnut.jpg' },
  ];
 
+
+ equipments = [
+  { name: 'TRACTOR', category: 'Tillage', image: 'assets/equipments/tractor.jpg' },
+  { name: 'PLOUGH', category: 'Tillage', image: 'assets/equipments/plough.png' },
+  { name: 'HARROW', category: 'Tillage', image: 'assets/equipments/harrow.png' },
+  { name: 'CULTIVATOR', category: 'Tillage', image: 'assets/equipments/cultivator.jpg' },
+
+  { name: 'SEED_DRILL', category: 'Sowing', image: 'assets/equipments/Seed_Drill.jpg' },
+  // { name: 'SEEDER', category: 'Sowing', image: 'assets/equipments/seeder.jpg' },
+  { name: 'DIBBLER', category: 'Sowing', image: 'assets/equipments/dibbler.jpg' },
+
+  { name: 'IRRIGATION_PUMP', category: 'Irrigation', image: 'assets/equipments/irrigation_pump.jpg' },
+  { name: 'SPRINKLER', category: 'Irrigation', image: 'assets/equipments/sprinkler.jpg' },
+  { name: 'DRIP_SYSTEM', category: 'Irrigation', image: 'assets/equipments/drip_system.jpg' },
+
+  { name: 'AGROBOT_WEEDER', category: 'Weeding', image: 'assets/equipments/weeder.jpeg' },
+  { name: 'CYCLE_WEEDER', category: 'Weeding', image: 'assets/equipments/cycle_weeder.png' },
+  // { name: 'SICKLE', category: 'Harvesting', image: 'assets/equipments/sickle.jpg' },
+  // { name: 'REAPER', category: 'Harvesting', image: 'assets/equipments/reaper.jpg' },
+
+  { name: 'MINI_TRUCK', category: 'Transportation', image: 'assets/equipments/mini_truck.jpg' },
+  { name: 'TRACTOR_TROLLY', category: 'Transportation', image: 'assets/equipments/tractor_trolley.jpg' },
+  { name: 'BAILGADI', category: 'Transportation', image: 'assets/equipments/bailgadi.jpeg' },
+
+  // { name: 'WHEELBARROW', category: 'Others', image: 'assets/equipments/wheelbarrow.jpg' },
+  // { name: 'POWER_TILLER', category: 'Others', image: 'assets/equipments/power_tiller.jpg' },
+  // { name: 'SPADE', category: 'Others', image: 'assets/equipments/spade.jpg' },
+  // { name: 'HOE', category: 'Others', image: 'assets/equipments/hoe.jpg' },
+  // { name: 'RAKE', category: 'Others', image: 'assets/equipments/rake.jpg' },
+  // { name: 'SPRAYER', category: 'Others', image: 'assets/equipments/sprayer.jpg' }
+];
+
+
+  equipmentsNames: any;
+  equipmentsToShow: { name: string; category: string; image: string; }[] | undefined;
+
   constructor(private router: Router, private loader: NgxUiLoaderService, private farmerService: FarmerService) { }
 
-  username = localStorage.getItem('username');
+  username = sessionStorage.getItem('username');
   isSidebarCollapsed = false;
   selectedCropNames: string = '';
   selectedCropsToShow: any[] = [];
@@ -89,6 +128,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.getSelectedCropsByFarmer();
+    this.getFarmerEquipments();
   }
 
   getCategories(): string[] {
@@ -101,9 +141,9 @@ export class DashboardComponent {
   }
 
   getSelectedCropsByFarmer(): void {
-    const username = localStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
     if (!username) {
-      console.error('Username not found in localStorage');
+      console.error('Username not found in sessionStorage');
       return;
     }
     this.farmerService.getSelectedCropsByFarmer(username).subscribe({
@@ -116,6 +156,33 @@ export class DashboardComponent {
       }
     });
   }
+
+  getFarmerEquipments(): void {
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+      console.error('Username not found in sessionStorage');
+      return;
+    }
+    this.farmerService.getFarmerEquipments(username).subscribe({
+      next: (res) => {
+        this.equipmentsNames = res.data;
+        this.filterEquipments();
+      },
+      error: (err) => {
+        console.error('Error fetching crops:', err);
+      }
+    });
+  }
+
+  filterEquipments(): void {
+  const names = this.equipmentsNames
+    .split(',')
+    .map((name: string) => name.trim().toLowerCase());
+
+  this.equipmentsToShow = this.equipments.filter(equipment =>
+    names.includes(equipment.name.toLowerCase())
+  );
+}
 
 filterSelectedCrops(): void {
   const names = this.selectedCropNames

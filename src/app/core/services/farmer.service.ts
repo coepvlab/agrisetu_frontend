@@ -67,4 +67,15 @@ testUpload(username: string): Observable<any> {
   return this.http.post(url, null); // null body, only query param
 }
 
+addFarmerEquipments(equipments: any[], username: string): Observable<any> {
+    const url = `${environment.apiUrl}/farmer1/add-farmer-equipments?username=${username}`;
+    return this.http.post(url, equipments);
+  }
+
+  getFarmerEquipments(username:any){
+      return this.http.get<any>(
+      `${environment.apiUrl}/farmer1/get-farmer-equipments?username=${username}`
+    );
+  }
+
 }

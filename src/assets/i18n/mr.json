@@ -1,6 +1,7 @@
 {
     "ADD_CROPS": "पिके जोडा",
     "YOUR_CROPS": "माझी पिके",
+    "MY_EQUIPMENTS":"माझी उपकरणे",
     "LOGIN": "लॉगिन",
     "SIDEBAR": {
         "DASHBOARD": "डॅशबोर्ड",
@@ -78,7 +79,9 @@
         "METHI": "मेथी",
         "KARLE": "कारले",
         "DODKA": "दोडका",
-        "GAWAR": "गवार"
+        "GAWAR": "गवार",
+        "HALAD": "हळद",
+        "ADARAK": "आले"
     },
     "EQUIPMENTS": {
         "TRACTOR": "ट्रॅक्टर",

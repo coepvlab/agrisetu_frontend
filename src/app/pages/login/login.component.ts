@@ -27,7 +27,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
-  role=localStorage.getItem('role');
+  role=sessionStorage.getItem('role');
   ngOnInit(): void {
     this.loginForm = this.fb.group({
      username: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
@@ -51,7 +51,7 @@ onSubmit(): void {
   if (this.loginForm.valid) {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res: any) => {
-        localStorage.setItem('username', this.loginForm.value.username);
+        sessionStorage.setItem('username', this.loginForm.value.username);
 
         Swal.fire({
           iconHtml: '<i class="bi bi-check-circle-fill" style="font-size: 48px; color: #4CAF50;"></i>',
@@ -68,7 +68,7 @@ onSubmit(): void {
           }
         }).then(() => {
           const parsedRes = JSON.parse(res);
-          localStorage.setItem('role', parsedRes.role);
+          sessionStorage.setItem('role', parsedRes.role);
 
           // Redirect based on cropsAdded flag
           if(parsedRes.role!='2'){

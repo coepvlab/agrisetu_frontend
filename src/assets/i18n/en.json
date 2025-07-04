@@ -24,6 +24,7 @@
         "FARMER_HISTORY": "Farmer History"
     },
     "YOUR_CROPS": "My Crops",
+    "MY_EQUIPMENTS":"My Equipments",
     "CATEGORY": {
         "Others": "Others",
         "Vegetables": "Vegetables",
@@ -78,7 +79,9 @@
         "METHI": "Fenugreek",
         "KARLE": "Bitter Gourd",
         "DODKA": "Ridge Gourd",
-        "GAWAR": "Cluster Beans"
+        "GAWAR": "Cluster Beans",
+        "HALAD": "Turmeric",
+        "ADARAK": "Ginger"
     },
     "EQUIPMENTS": {
         "TRACTOR": "Tractor",

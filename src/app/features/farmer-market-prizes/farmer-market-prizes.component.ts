@@ -35,6 +35,9 @@ export class FarmerMarketPrizesComponent {
   { name: 'DODKA', category: 'Vegetables', image: 'assets/dodka.jpeg' },
   { name: 'GAWAR', category: 'Vegetables', image: 'assets/gawar.png' },
   { name: 'OKRA', category: 'Vegetables', image: 'assets/okra.jpg' },
+   { name: 'ADARAK', category: 'Vegetables', image: 'assets/adarak.webp' },
+  { name: 'HALAD', category: 'Vegetables', image: 'assets/halad.webp' },
+
   { name: 'WHEAT', category: 'Grains', image: 'assets/wheat.jpg' },
   { name: 'RICE', category: 'Grains', image: 'assets/paddy.jpg' },
   { name: 'BAJRA', category: 'Grains', image: 'assets/bajra.jpg' },
